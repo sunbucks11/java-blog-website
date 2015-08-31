@@ -2,10 +2,14 @@ package cz.jiripinkas.jba.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -13,7 +17,56 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
+
+	@Column(unique = true)
+	private String name;
+
+	private String email;
+
+	private String password;
+
+	private boolean enabled;
+
+	@ManyToMany
+	@JoinTable
+	private List<Role> roles;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	private List<Blog> blogs;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -36,31 +89,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	private String name; 
-	
-	private String email; 
-	
-	private String password; 
-	
-	@ManyToMany
-	private List<Role> roles; 
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	
 }
