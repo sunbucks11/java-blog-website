@@ -9,7 +9,7 @@
 
 	<mvc:annotation-driven/>
 
-	<context:component-scan base-package="cz.jiripinkas.jba.controller" />
+	<context:component-scan base-package="com.teamnetsol.dhp.controller" />
 
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
