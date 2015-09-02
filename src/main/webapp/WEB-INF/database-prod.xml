@@ -15,11 +15,11 @@
 		<constructor-arg value="#{systemEnvironment['DATABASE_URL']}" />
 	</bean>
 
-	<bean id="dataSource" class="org.apache.common.dbcp.BasicDataSource">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="url"
-			value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath()}" />
-			<property  name="username" value="#{@dbUrl.getUserInfo().split(':')[0]}" />
-			<property  name="password" value="#{@dbUrl.getUserInfo().split(':')[1]}" />
+			value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }" />
+			<property  name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }" />
+			<property  name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
 	</bean>
 
 	<bean id="emf"
@@ -28,8 +28,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 		<property name="persistenceProvider">

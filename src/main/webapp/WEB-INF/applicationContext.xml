@@ -21,10 +21,18 @@
 		id="transactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<jpa:repositories base-package="com.teamnetsol.dhp.repository"/>
-	
-	<import resource="security.xml"/>
+
+	<jpa:repositories base-package="com.teamnetsol.dhp.repository" />
+
+	<import resource="security.xml" />
 	<task:annotation-driven />
+
+	<beans profile="dev">
+		<import resource="database-dev.xml" />
+	</beans>
+
+	<beans profile="prod">
+		<import resource="database-prod.xml" />
+	</beans>
 
 </beans>
