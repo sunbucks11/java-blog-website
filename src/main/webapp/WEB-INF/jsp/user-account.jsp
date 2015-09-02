@@ -8,9 +8,7 @@
 	data-target="#myModal">New blog</button>
 
 
-
-
-<form:form commandName="blog" cssClass="form-horizontal">
+<form:form commandName="blog" cssClass="form-horizontal blogForm">
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -63,6 +61,34 @@ $(document).ready(function(){
 		$("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
 		$("#modalRemove").modal();
 	});
+	
+	
+	$(".blogForm").validate(
+			{
+				rules : {
+					name : {
+						required : true,
+						minlength : 1
+					},
+					
+					url : {
+						required : true,
+						url : true
+					}
+				}, 
+				
+				highlight: function(element){
+					$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+				},
+				
+				unhighlight: function(element){
+					$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+				}
+
+			}
+	
+	);
+	
 });
 </script>
 
