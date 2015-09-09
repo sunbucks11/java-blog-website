@@ -24,7 +24,7 @@
 
 	<bean id="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="com.teamnetsol.dhp.entity"></property>
+		<property name="packagesToScan" value="com.java.blog.entity"></property>
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaProperties">
 			<props>
