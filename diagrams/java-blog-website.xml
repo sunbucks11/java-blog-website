@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>com.java.blog.entity.Blog</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>200</entity-X-Coordinate>
+		<entity-Y-Coordinate>14</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.java.blog.entity.User</entity-name>
+		<entity-width>119</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>10</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.java.blog.entity.Item</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>420</entity-X-Coordinate>
+		<entity-Y-Coordinate>11</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.java.blog.entity.Role</entity-name>
+		<entity-width>138</entity-width>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>235</entity-X-Coordinate>
+		<entity-Y-Coordinate>236</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+</entities>
