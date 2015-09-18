@@ -51,3 +51,11 @@
 	<input type="password" name="j_password" class="form-control" placeholder="Password" required> 
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
+
+
+<%-- <form action="<spring:url value="/LoginController/authenticator" />" method="post">
+	<input type="text" name="username" placeholder="User name">
+	<input type="password" name="password" placeholder="Password">
+ 	<input type="checkbox" name="setup" value="true">
+ 	<input type="submit" value="Sign In">
+</form> --%>

@@ -305,5 +305,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/semiribrahim/Workspaces/Workspace_Tutorial/spring-workspace/GoogleAuthenticator/target/google-authenticator-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
