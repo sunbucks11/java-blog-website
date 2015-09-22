@@ -119,4 +119,3 @@ public class GoogleAuthenticator {
 		return (int) truncatedHash;
 	}
 }
-
