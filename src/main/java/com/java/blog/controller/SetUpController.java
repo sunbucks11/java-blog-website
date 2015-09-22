@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ public class SetUpController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		
 		String username = request.getParameter("username");
 		
@@ -45,12 +48,14 @@ public class SetUpController extends HttpServlet {
 		response.setContentType("image/png");
 		response.setContentLength(outs.size());
 		
-		OutputStream outStream = response.getOutputStream();
+//		OutputStream outStream = response.getOutputStream();
+//		
+//		outStream.write(outs.toByteArray());
+//		outStream.flush();
+//		outStream.close();
 		
-		outStream.write(outs.toByteArray());
+		response.sendRedirect("barcode.html");
 		
-		outStream.flush();
-		outStream.close();
 	}
 
 }

@@ -40,13 +40,12 @@ public class AuthController extends HttpServlet {
 			if(is2faSetup){
 			 // user want to set up 2fa 
 				request.setAttribute("username", username);
-				request.getRequestDispatcher("/SetUpController").forward(request,
-						response);
+				request.getRequestDispatcher("/SetUpController").forward(request,response);
 			}else{
 			// forward to verify code				
 				request.setAttribute("username", username);
-				request.getRequestDispatcher("/auth.jsp").forward(request,
-						response);
+				//request.getRequestDispatcher("/auth.jsp").forward(request,response);	
+				//request.getRequestDispatcher("/barcode.jsp").forward(request,response);				
 			}
 							
 		} else {

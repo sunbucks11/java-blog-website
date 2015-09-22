@@ -55,4 +55,4 @@
   <label>Enter Your Key</label> <input type="text" name="code"
     class="form-control" placeholder="Name" required><br /> <input
     class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
-</form>
+</form>  
