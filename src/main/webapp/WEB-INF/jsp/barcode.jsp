@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 	
 	<%@ page import ="java.util.*" %>
-<%-- 	<%@page import="java.io.ByteArrayOutputStream"%>
-	<%@page import="net.glxn.qrgen.QRCode" %>
+	<%-- <%@page import="java.io.ByteArrayOutputStream"%>  --%> 
+<%-- 	<%@page import="net.glxn.qrgen.QRCode" %>
 	<%@page import="net.glxn.qrgen.image.ImageType" %>
-	<%@page import="home.test.googauth.GoogleAuthenticator" %>
-	<%@page import="java.io.OutputStream;" %> --%>
+	<%@page import="home.test.googauth.GoogleAuthenticator" %> --%>
+ <%-- 	<%@page import="java.io.OutputStream;" %>  --%>
 
 
 <%@include file="../layout/taglib.jsp"%>
@@ -17,7 +17,8 @@
 	left: 0;
 	top: 0;
 	z-index: 9000;
-	background-color: #000;
+	/* background-color: #000; */
+	background-color:rgba(0,0,0,0.3);
 	display: none;
 }
 
@@ -100,6 +101,34 @@
 		});
 
 	});
+	
+	
+	
+	
+	$(document).ready(function () {
+	    $("#submit").click(function () {
+	        $.ajax({
+	            type: "GET",
+	            url: "SetUpController",
+	            data: {
+	                "SetUpController": "http://localhost:8080/java-blog-website/barcode.html"
+	            },
+	            success: function (result) {
+	                $("#dialog").html('<img src="'+result+'" >'); //changed here
+	            }
+	        });
+	    });
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 
@@ -130,21 +159,28 @@
 	        String CT = hour+":"+ minute +":"+ second +" "+ am_pm;
 	        out.println("Current Time is: " + CT + "\n");
 	        
+/* 	         ByteArrayOutputStream outs = new ByteArrayOutputStream(1024);
 	        
-	        
-	        
-	        //byte[] imageBytes = new byte[1024];
-	        //response.getOutputStream().write(imageBytes);
-	        //response.getOutputStream().flush();
-		
-	        //response.getOutputStream();
-				        
-	  
-	        
-	        
+	        OutputStream outStream = response.getOutputStream();
+			outStream.write(outs.toByteArray());
+			outStream.flush();
+			outStream.close();	  */ 
+			
 	     %>
 
-      <img src="images${response.getOutputStream()}.png" />
+
+		<!-- <img src="barry.jpeg" alt="Mountain View" style="width:304px;height:228px;"> -->
+		
+		<%-- <img src="${barcode}" alt="Mountain View" style="width:304px;height:228px;"> --%>
+		<img src="${pageContext.servletContext.contextPath}/img/barry.jpeg"/>
+		
+		
+		
+
+
+     <%--  <img src="images${response.getOutputStream()}.png" /> --%>
+
+     
 
 <%--  		<form class="form-signin" role="form" action="<spring:url value="AuthController" />" method="POST">
 				<input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
@@ -155,69 +191,13 @@
 		</form>
  --%>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		<div id="popupfoot">
 			<!--        <a href="#" class="close agree">I agree</a> | 
 	   <a class="close agree"style="color:red;" href="#">I do not agree</a> 	     -->
+	   
 	   
 		</div>
 	</div>
 	<div id="mask"></div>
 
 </div>
-
-
-
-
-
-
-
-	<div id="dialog" class="window">
-		Your Content Goes Here
-		<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">Authentication</h4>
-					</div>
-					<div class="modal-body">
-
-						<form class="form-signin" role="form"
-							action="<spring:url value="AuthController" />" method="POST">
-							<input type="text" name="j_username" class="form-control"
-								placeholder="User Name" required autofocus> <input
-								type="password" name="j_password" class="form-control"
-								placeholder="Password" required> <input type="checkbox"
-								name="setup" value="true" checked="checked" hidden="true">
-							<!-- <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">  -->
-							<input class="btn btn-danger" type="submit" value="Generate Code">
-							<!--  <a href="" class="btn btn-danger removeBtn">Generate Code</a> -->
-						</form>
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<!--      <a href="" class="btn btn-danger removeBtn">Generate Code</a> -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>

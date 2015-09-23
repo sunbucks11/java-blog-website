@@ -26,7 +26,6 @@ public class SetUpController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		
 		String username = request.getParameter("username");
 		
@@ -42,19 +41,37 @@ public class SetUpController extends HttpServlet {
 		// more in info @ https://code.google.com/p/google-authenticator/wiki/KeyUriFormat
 		String s = "otpauth://totp/"+username+"?secret="+secretKey;
 		
+		
 		// Get the Qr Code png as a OutPutStream
 		ByteArrayOutputStream outs = QRCode.from(s).to(ImageType.PNG).stream();
 
 		response.setContentType("image/png");
 		response.setContentLength(outs.size());
 		
-//		OutputStream outStream = response.getOutputStream();
-//		
-//		outStream.write(outs.toByteArray());
-//		outStream.flush();
-//		outStream.close();
+		OutputStream outStream = response.getOutputStream();
 		
-		response.sendRedirect("barcode.html");
+		outStream.write(outs.toByteArray());
+		
+		outStream.flush();
+		outStream.close();
+
+		
+		
+		/*
+		String qrtext ="otpauth://totp/"+"test"+"?secret="+"123";
+
+        ByteArrayOutputStream out = QRCode.from(qrtext).to(ImageType.PNG).stream();
+
+        response.setContentType("image/png");
+        response.setContentLength(out.size());
+
+        OutputStream outStream = response.getOutputStream();
+        outStream.write(out.toByteArray());
+
+        outStream.flush();
+        outStream.close();
+        */
+
 		
 	}
 

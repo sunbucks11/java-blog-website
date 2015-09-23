@@ -45,7 +45,7 @@ public class AuthController extends HttpServlet {
 			// forward to verify code				
 				request.setAttribute("username", username);
 				//request.getRequestDispatcher("/auth.jsp").forward(request,response);	
-				//request.getRequestDispatcher("/barcode.jsp").forward(request,response);				
+				request.getRequestDispatcher("/barcode.jsp").forward(request,response);
 			}
 							
 		} else {
