@@ -6,17 +6,21 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BarcodeController {
 
+	@Autowired
+	ServletContext servletContext;
+	
 /*
 	  @RequestMapping("/barcode")
 		  public String barcode(Model model){
@@ -32,6 +36,7 @@ public class BarcodeController {
 */	
 
 
+/*	
 	 @RequestMapping("/barcode")
 	    @ResponseBody
 	    public HttpEntity<byte[]> barcode() throws IOException {
@@ -40,39 +45,53 @@ public class BarcodeController {
 	        
 	        
 	    	   try{
-	   			
-	    			BufferedImage originalImage = ImageIO.read(new File("/Users/semiribrahim/Documents/Work/DHP/Spring_2_Planning/confdemo/images/demo/barry.jpeg"));
-	    					
+	    			BufferedImage originalImage = ImageIO.read(new File(servletContext.getRealPath("/WEB-INF/img/barry.jpeg")));
 	    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    			ImageIO.write( originalImage, "jpeg", baos );
 	    			baos.flush();
 	    			image = baos.toByteArray();
 	    			baos.close();
-	    			
 	    	       
 	    	        headers.setContentType(MediaType.IMAGE_JPEG); //or what ever type it is
 	    	        headers.setContentLength(image.length);
-	    	        
-	    					
+	    	        		
 	    			}catch(IOException e){
 	    				System.out.println(e.getMessage());
 	    			}		       
 	       
 	    	   return new HttpEntity<byte[]>(image, headers);
 	    }
+*/
+	
 
 	
 
-	/*
-
 	    @RequestMapping("/barcode")
 	    public ModelAndView barcode() {
-
-	    	ModelAndView mv = new ModelAndView("/Scene/scene");
 	    	
-	    	return mv; 
+	    	byte[] image = null; 
+	    	HttpHeaders headers = new HttpHeaders();
+	    	BufferedImage originalImage = null; 
+	    	
+	    	   try{
+	    			originalImage = ImageIO.read(new File(servletContext.getRealPath("/WEB-INF/img/barry.jpeg")));
+	    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    			ImageIO.write( originalImage, "jpeg", baos );
+	    			baos.flush();
+	    			image = baos.toByteArray();
+	    			baos.close();
+	    	       
+	    	        headers.setContentType(MediaType.IMAGE_JPEG); //or what ever type it is
+	    	        headers.setContentLength(image.length);
+	    	        		
+	    			}catch(IOException e){
+	    				System.out.println(e.getMessage());
+	    			}
 	    	   
+	    	   //String 	filepath = servletContext.getRealPath("/WEB-INF/img/barry.jpeg");
+
+	    	return new ModelAndView("barcode","QRbarcode", "/WEB-INF/img/barry.jpeg");	    	   
 	    }
-	*/
+	
 	    
 }

@@ -159,6 +159,8 @@
 	        String CT = hour+":"+ minute +":"+ second +" "+ am_pm;
 	        out.println("Current Time is: " + CT + "\n");
 	        
+	        
+	        
 /* 	         ByteArrayOutputStream outs = new ByteArrayOutputStream(1024);
 	        
 	        OutputStream outStream = response.getOutputStream();
@@ -169,18 +171,9 @@
 	     %>
 
 
-		<!-- <img src="barry.jpeg" alt="Mountain View" style="width:304px;height:228px;"> -->
-		
+		<!-- <img src="barry.jpeg" alt="Mountain View" style="width:304px;height:228px;"> -->	
 		<%-- <img src="${barcode}" alt="Mountain View" style="width:304px;height:228px;"> --%>
-		<img src="${pageContext.servletContext.contextPath}/img/barry.jpeg"/>
-		
-		
-		
-
-
-     <%--  <img src="images${response.getOutputStream()}.png" /> --%>
-
-     
+     	<%--  <img src="images${response.getOutputStream()}.png" /> --%>
 
 <%--  		<form class="form-signin" role="form" action="<spring:url value="AuthController" />" method="POST">
 				<input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
@@ -199,5 +192,10 @@
 		</div>
 	</div>
 	<div id="mask"></div>
+
+	<img src="${QRbarcode}" alt="Mountain View" style="width:304px;height:228px;">
+	
+	${QRbarcode}
+	
 
 </div>
