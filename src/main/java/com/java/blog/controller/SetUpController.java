@@ -41,6 +41,8 @@ public class SetUpController extends HttpServlet {
 		// more in info @ https://code.google.com/p/google-authenticator/wiki/KeyUriFormat
 		String s = "otpauth://totp/"+username+"?secret="+secretKey;
 		
+		System.out.println(s);
+		
 		
 		// Get the Qr Code png as a OutPutStream
 		ByteArrayOutputStream outs = QRCode.from(s).to(ImageType.PNG).stream();

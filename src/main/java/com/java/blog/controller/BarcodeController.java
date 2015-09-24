@@ -1,19 +1,17 @@
 package com.java.blog.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+//import home.test.googauth.GoogleAuthenticator;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.warrenstrange.googleauth.GoogleAuthenticator;
+import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 
 @Controller
 public class BarcodeController {
@@ -65,7 +63,7 @@ public class BarcodeController {
 	
 
 	
-
+/*
 	    @RequestMapping("/barcode")
 	    public ModelAndView barcode() {
 	    	
@@ -92,6 +90,43 @@ public class BarcodeController {
 
 	    	return new ModelAndView("barcode","QRbarcode", "/WEB-INF/img/barry.jpeg");	    	   
 	    }
+*/
 	
+    @RequestMapping("/barcode")
+    public ModelAndView barcode() {	
+    	 ModelAndView modelAndView = new ModelAndView( "barcode" );
+         GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator( );
+
+         final GoogleAuthenticatorKey key = googleAuthenticator.createCredentials( );
+         final String secret = key.getKey( );
+         
+         String username = "tom";
+        
+     //   String otpAuthURL = GoogleAuthenticatorQRGenerator.getOtpAuthURL( "test", "test@test.com",key );
+         
+     	//String otpAuthURL = "otpauth://totp/"+"test"+"?secret="+secret;	
+     	 String otpAuthURL =  "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/" +username+"?secret="+secret;
+        //String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2Fjanet%3Ajanet%40teamnetsol.com%3Fsecret%3DGM5Z4FTOE5CDQ3F4%26issuer%3Djanet";
+     	
+     	
+     	System.out.println("Secret: " + secret);
+     	System.out.println("barCodeUrl: " + otpAuthURL);
+     	System.out.println("initAuth: " + true);
+     	
+
+         modelAndView.getModelMap( ).put( "secretKey", secret );
+         modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );
+         modelAndView.getModelMap( ).put( "initAuth", true );
+    	
+    	
+        //return new ModelAndView("barcode","QRbarcode", modelAndView);
+        
+        return modelAndView;
+    	
+    	
+    	
+    	
+    }
+    	
 	    
 }

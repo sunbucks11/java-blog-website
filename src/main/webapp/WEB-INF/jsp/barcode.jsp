@@ -36,7 +36,7 @@
 }
 
 #boxes #dialog {
-	width: 750px;
+	width: 450px;
 	height: 300px;
 	padding: 10px;
 	background-color: #ffffff;
@@ -50,6 +50,12 @@
 	bottom: 0px;
 	width: 250px;
 	left: 250px;
+}
+
+#barcodeParg{
+	color: red;
+	font-size: 14px;
+	font-family: sans-serif;
 }
 </style>
 
@@ -103,8 +109,7 @@
 	});
 	
 	
-	
-	
+
 	$(document).ready(function () {
 	    $("#submit").click(function () {
 	        $.ajax({
@@ -119,83 +124,19 @@
 	        });
 	    });
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </script>
 
 
-
 <div id="boxes">
-
-
 	<div id="dialog" class="window">
-		Authentication Barcode
-		
-		<br />
-
-
-	        <%
-	        
-	        // Set refresh, autoload time as 5 seconds
-	        response.setIntHeader("Refresh", 5);
-	        // Get current time
-	        Calendar calendar = new GregorianCalendar();
-	        String am_pm;
-	        int hour = calendar.get(Calendar.HOUR);
-	        int minute = calendar.get(Calendar.MINUTE);
-	        int second = calendar.get(Calendar.SECOND);
-	        if(calendar.get(Calendar.AM_PM) == 0)
-	           am_pm = "AM";
-	        else
-	           am_pm = "PM";
-	        String CT = hour+":"+ minute +":"+ second +" "+ am_pm;
-	        out.println("Current Time is: " + CT + "\n");
-	        
-	        
-	        
-/* 	         ByteArrayOutputStream outs = new ByteArrayOutputStream(1024);
-	        
-	        OutputStream outStream = response.getOutputStream();
-			outStream.write(outs.toByteArray());
-			outStream.flush();
-			outStream.close();	  */ 
-			
-	     %>
-
-
-		<!-- <img src="barry.jpeg" alt="Mountain View" style="width:304px;height:228px;"> -->	
-		<%-- <img src="${barcode}" alt="Mountain View" style="width:304px;height:228px;"> --%>
-     	<%--  <img src="images${response.getOutputStream()}.png" /> --%>
-
-<%--  		<form class="form-signin" role="form" action="<spring:url value="AuthController" />" method="POST">
-				<input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
-				<input type="password" name="j_password" class="form-control" placeholder="Password" required>
-			 	<input type="checkbox" name="setup" value="true" checked="checked" hidden="true"> <br/>
-
- 				<input class="btn btn-danger" type="submit" value="Generate Code"> 
-		</form>
- --%>
-
-		<div id="popupfoot">
-			<!--        <a href="#" class="close agree">I agree</a> | 
-	   <a class="close agree"style="color:red;" href="#">I do not agree</a> 	     -->
-	   
-	   
-		</div>
+			Authentication Barcode
+			<br />	
+			<p id=barcodeParg> Please scan this barcode using Authenticator App on your phone </p>	
+	 		<img src="${barCodeUrl}" alt="Mountain View" style="width:250px;height:200px;">	
+			<div id="popupfoot">
+				<!--        <a href="#" class="close agree">I agree</a> | 
+		   <a class="close agree"style="color:red;" href="#">I do not agree</a> 	     -->
+			</div>
 	</div>
 	<div id="mask"></div>
-
-	<img src="${QRbarcode}" alt="Mountain View" style="width:304px;height:228px;">
-	
-	${QRbarcode}
-	
-
 </div>
