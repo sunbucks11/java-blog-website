@@ -42,18 +42,21 @@
 	background-color: #ffffff;
 	font-family: 'Segoe UI Light', sans-serif;
 	font-size: 15pt;
+	top: 100px;
 }
 
 #popupfoot {
 	font-size: 16pt;
 	position: absolute;
-	bottom: 0px;
+	/* bottom: 0px; */
 	width: 250px;
-	left: 250px;
+	/* left: 250px; */
+	left: 180px;
+	top: 10px;
 }
 
 #barcodeParg{
-	color: red;
+	color: blue;
 	font-size: 14px;
 	font-family: sans-serif;
 }
@@ -136,6 +139,8 @@
 			<div id="popupfoot">
 				<!--        <a href="#" class="close agree">I agree</a> | 
 		   <a class="close agree"style="color:red;" href="#">I do not agree</a> 	     -->
+		   
+		      <a class="close agree"style="color:red;" href="#">X</a> 
 			</div>
 	</div>
 	<div id="mask"></div>
