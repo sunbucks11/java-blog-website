@@ -41,9 +41,9 @@ public class VerifyController extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		
 		if (result) {
-			//pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");
+			pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");
 			System.out.println("Redirect");
-			response.sendRedirect("/java-blog-website/index.html");
+			//response.sendRedirect("/java-blog-website/index.html");
 		} else {
 			pw.write("<html><body><h1>Code Verification Unsuccessful</h1></body></html>");
 		}

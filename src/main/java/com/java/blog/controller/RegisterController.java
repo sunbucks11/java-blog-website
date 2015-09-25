@@ -1,52 +1,40 @@
 package com.java.blog.controller;
 
-import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.java.blog.entity.User;
-import com.java.blog.service.UserService;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping(value = "/register")
 public class RegisterController {
 
-	@Autowired
-	private UserService userService;
-
-	@ModelAttribute("user")
-	public User contructUser() {
-		return new User();
+	@RequestMapping(method = RequestMethod.GET)
+	public String viewRegistration(Map<String, Object> model) {
+				
+		List<String> professionList = new ArrayList<>();
+		professionList.add("Developer");
+		professionList.add("Designer");
+		professionList.add("IT Manager");
+		model.put("professionList", professionList);
+		
+		return "Registration";
 	}
-
-	@RequestMapping
-	public String showRegister() {
-		return "user-register";
-	}
-
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return "user-register";
-		}
-		userService.save(user);
-		redirectAttributes.addFlashAttribute("success", true);
-		return "redirect:/register.html";
+	public String processRegistration(Map<String, Object> model) {
+		
+		// implement your own registration logic here...
+		
+		// for testing purpose:
+		System.out.println("username: " );
+		System.out.println("password: ");
+		System.out.println("email: ");
+		
+		return "RegistrationSuccess";
 	}
-
-	@RequestMapping("/available")
-	@ResponseBody
-	public String available(@RequestParam String username) {
-		Boolean available = userService.findOne(username) == null;
-		return available.toString();
-	}
-
 }

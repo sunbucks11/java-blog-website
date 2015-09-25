@@ -1,18 +1,17 @@
 package com.java.blog.controller;
 
+import home.test.googauth.GoogleAuthenticator;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import home.test.googauth.GoogleAuthenticator;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 /**
@@ -41,9 +40,6 @@ public class SetUpController extends HttpServlet {
 		// more in info @ https://code.google.com/p/google-authenticator/wiki/KeyUriFormat
 		String s = "otpauth://totp/"+username+"?secret="+secretKey;
 		
-		System.out.println(s);
-		
-		
 		// Get the Qr Code png as a OutPutStream
 		ByteArrayOutputStream outs = QRCode.from(s).to(ImageType.PNG).stream();
 
@@ -56,24 +52,6 @@ public class SetUpController extends HttpServlet {
 		
 		outStream.flush();
 		outStream.close();
-
-		
-		
-		/*
-		String qrtext ="otpauth://totp/"+"test"+"?secret="+"123";
-
-        ByteArrayOutputStream out = QRCode.from(qrtext).to(ImageType.PNG).stream();
-
-        response.setContentType("image/png");
-        response.setContentLength(out.size());
-
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(out.toByteArray());
-
-        outStream.flush();
-        outStream.close();
-        */
-
 		
 	}
 
