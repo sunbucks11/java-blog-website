@@ -20,101 +20,80 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
-	boolean is2faSetup  = true;
-	
-	
-	//@RequestMapping("/login")
+
+	boolean is2faSetup = false;
+	boolean is2faVerified = false;
+
+	// @RequestMapping("/login")
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
 		return "login";
 	}
-	
-	
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	    ModelAndView modelAndView = new ModelAndView( "barcode" );
-        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator( );
+	public ModelAndView processLogin(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		ModelAndView modelAndView = new ModelAndView("barcode");
+		GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 		String username = request.getParameter("j_username");
 		String password = request.getParameter("j_password");
-				
-		
-		//if (username != null && password != null) 
-		//{
-			if(checkCredentials(username, password))
-			{
-				
-				if(is2faSetup)
-				{
-				     // user want to set up 2fa 				
-			         final GoogleAuthenticatorKey key = googleAuthenticator.createCredentials( );
-			         final String secret = key.getKey( ); 
-			         request.getSession().setAttribute( "secretKey", secret );
-			     	 String otpAuthURL =  "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/" +username+"?secret="+secret;
-			     	 
-			         modelAndView.getModelMap( ).put( "secretKey", secret );
-			         modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );
-			         modelAndView.getModelMap( ).put( "initAuth", true ); 		
-			         is2faSetup = false; 
-			         
-			         //forward to verify code
-				}
-				else
-				{
-				    // forward to verify code				
-					//request.setAttribute("username", username);
-					//request.getRequestDispatcher("/auth.jsp").forward(request,response);	
-					//request.getRequestDispatcher("/barcode.jsp").forward(request,response);
-					
-					//System.out.println("R");
-					//modelAndView.addObject( "redirect:/account.html"); 
-				    return new ModelAndView("redirect:/verification.html");
-				}
-			//}
-							
-		}
-		else 
-		{
-			
-			//request.setAttribute("error", "Unknown user, please try again");
-			//request.getRequestDispatcher("/index.jsp").forward(request,response);
-		     System.out.println("Unknown user, please try again");
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
-         
-         
-         return modelAndView;	
+		// if (username != null && password != null)
+		// {
+		if (checkCredentials(username, password)) {
+
+			if (!is2faSetup) {
+				// user want to set up 2fa
+				final GoogleAuthenticatorKey key = googleAuthenticator
+						.createCredentials();
+				final String secret = key.getKey();
+				request.getSession().setAttribute("secretKey", secret);
+				String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/"
+						+ username + "?secret=" + secret;
+
+				modelAndView.getModelMap().put("secretKey", secret);
+				modelAndView.getModelMap().put("barCodeUrl", otpAuthURL);
+				modelAndView.getModelMap().put("initAuth", true);
+				is2faSetup = true;
+
+			} else {
+				if(is2faVerified)
+				{
+					return new ModelAndView("redirect:/index.html");
+				}
+				else{
+					// forward to verify code
+					is2faVerified = true; 
+					return new ModelAndView("redirect:/verification.html");
+				}
+
+			}
+
+		} else {
+
+			// System.out.println("Unknown user, please try again");
+			return new ModelAndView("redirect:/login.html");
+		}
+
+		return modelAndView;
 	}
 
-
-	
-	
-
-	
 	private boolean checkCredentials(String username, String password) {
-		User user = userRepository.findByName(username); 
-		if(user != null){
-			
-		 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
-		if(user.getName() == username && encoder.matches(password, user.getPassword())){
-				return true; 
+		
+		if (userRepository.findByName(username) != null) 
+		{
+			User user = userRepository.findByName(username);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			if ((encoder.matches(password, user.getPassword()))
+					&& (user.getName().equals(username.trim()))) {
+				return true;
 			}
-		}	
+		}
 		return false;
 	}
 }
