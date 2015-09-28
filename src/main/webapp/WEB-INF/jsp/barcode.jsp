@@ -189,11 +189,21 @@ display: inline-block;
 			<p id=barcodeParg> Please scan this barcode using Authenticator App on your phone </p>	
 	 		<img src="${barCodeUrl}" alt="Mountain View" style="width:250px;height:200px;">	
 			</div>
+		
 					
 			<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<a href="verification.html" type="button" class="btn btn-default" style="background-image: linear-gradient(to bottom,#31CE12 0,#31CE12 100%);; font-weight: bold;">Verify</a> 
 			</div>	
+			
+			
+<!-- 			<form class="form-signin" action="LoginController" method="post">
+			  	<h1>Verification Code</h1> <br />
+			  	<label>Enter Your Key</label> <input type="text" name="code"
+			    class="form-control" placeholder="Name" required><br /> <input
+			    class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
+			</form>   -->	
+			
 		</div>
 	</div>
 </div>

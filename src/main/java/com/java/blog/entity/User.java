@@ -38,6 +38,8 @@ public class User {
 	private String password;
 
 	private boolean enabled;
+	
+	private boolean isAuthenticated; 
 
 	@ManyToMany
 	@JoinTable
@@ -46,6 +48,14 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Blog> blogs;
 
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
+	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}

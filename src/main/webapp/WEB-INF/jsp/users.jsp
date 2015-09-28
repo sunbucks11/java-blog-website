@@ -13,6 +13,7 @@ $(document).ready(function(){
 });
 </script>
 
+ <form  role="form" action="<spring:url value="/AdminController" />" method="POST" >
 <table class="table table-bordered table-hover table-striped">
 	<thead>
 		<tr>
@@ -35,7 +36,7 @@ $(document).ready(function(){
 		</c:forEach>
 	</tbody>
 </table>
-
+</form>
 
 
 

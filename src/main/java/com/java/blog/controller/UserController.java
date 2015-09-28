@@ -18,6 +18,7 @@ import com.java.blog.exception.RssException;
 import com.java.blog.service.BlogService;
 import com.java.blog.service.UserService;
 
+
 @Controller
 public class UserController {
 
@@ -28,7 +29,7 @@ public class UserController {
 	private BlogService blogService;
 
 	@ModelAttribute("blog")
-	public Blog contructBlog() {
+	public Blog constructBlog() {
 		return new Blog();
 	}
 
@@ -40,7 +41,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
-	public String doAddBlog(Model model, @Valid @ModelAttribute("blog") Blog blog, BindingResult result,
+	public String doAddBlog(Model model,
+			@Valid @ModelAttribute("blog") Blog blog, BindingResult result,
 			Principal principal) throws RssException {
 		if (result.hasErrors()) {
 			return account(model, principal);
@@ -50,10 +52,11 @@ public class UserController {
 		return "redirect:/account.html";
 	}
 
-	@RequestMapping(value = "/blog/remove/{id}")
+	@RequestMapping("/blog/remove/{id}")
 	public String removeBlog(@PathVariable int id) {
 		Blog blog = blogService.findOne(id);
 		blogService.delete(blog);
 		return "redirect:/account.html";
 	}
+
 }

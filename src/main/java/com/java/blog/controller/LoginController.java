@@ -19,15 +19,13 @@ import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
 	@Autowired
 	private UserRepository userRepository;
 
-	boolean is2faSetup = false;
-	boolean is2faVerified = false;
-
-	// @RequestMapping("/login")
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
 		return "login";
@@ -41,12 +39,14 @@ public class LoginController {
 		GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 		String username = request.getParameter("j_username");
 		String password = request.getParameter("j_password");
-
-		// if (username != null && password != null)
-		// {
-		if (checkCredentials(username, password)) {
-
-			if (!is2faSetup) {
+		
+		if (checkCredentials(username, password)) 
+		{
+			request.getSession().setAttribute( "isAuthenticated", true );
+			
+			if (request.getSession().getAttribute("isAdmin") == null && 
+				request.getSession().getAttribute("isVerified") == null) 
+			{	
 				// user want to set up 2fa
 				final GoogleAuthenticatorKey key = googleAuthenticator
 						.createCredentials();
@@ -55,33 +55,30 @@ public class LoginController {
 				String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/"
 						+ username + "?secret=" + secret;
 
-				modelAndView.getModelMap().put("secretKey", secret);
+				//modelAndView.getModelMap().put("initAuth", true);
+				//modelAndView.getModelMap().put("secretKey", secret);
 				modelAndView.getModelMap().put("barCodeUrl", otpAuthURL);
-				modelAndView.getModelMap().put("initAuth", true);
-				is2faSetup = true;
-
-			} else {
-				if(is2faVerified)
-				{
-					return new ModelAndView("redirect:/index.html");
-				}
-				else{
-					// forward to verify code
-					is2faVerified = true; 
-					return new ModelAndView("redirect:/verification.html");
-				}
-
+				
+				request.getSession().setAttribute( "isAdmin", true );
+				//request.getSession().setAttribute( "username", request.getParameter("j_username") );
+				return modelAndView;				
 			}
-
-		} else {
-
-			// System.out.println("Unknown user, please try again");
+			
+			if(request.getSession().getAttribute("isVerified") == null)
+			{
+				return new ModelAndView("redirect:/verification.html");
+			}
+			else{
+				return new ModelAndView("redirect:/index.html");
+			}			
+		}
+		else {
 			return new ModelAndView("redirect:/login.html");
 		}
-
-		return modelAndView;
 	}
 
+	
+	
 	private boolean checkCredentials(String username, String password) {
 		
 		if (userRepository.findByName(username) != null) 
@@ -91,6 +88,7 @@ public class LoginController {
 
 			if ((encoder.matches(password, user.getPassword()))
 					&& (user.getName().equals(username.trim()))) {
+				
 				return true;
 			}
 		}

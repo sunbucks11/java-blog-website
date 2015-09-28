@@ -5,6 +5,8 @@
 <html>
 <head>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
@@ -44,22 +46,43 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<spring:url value="/" />">DHP</a>
+            <a class="navbar-brand" href="<spring:url value="/" />">Java Blog</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a></li>
-              <security:authorize access="hasRole('ROLE_ADMIN')">
+              <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
+              
+             <c:if test="${not empty isVerified}">
+			    <li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/users.html" />">Users</a></li>
+			</c:if>
+              
+              <c:if test="${empty isAuthenticated}">
+               <li class="${current == 'login' ? 'active' : ''}"><a href="<spring:url value="/login.html" />">Login</a></li>
+              </c:if>
+              
+              <c:if test="${not empty isAuthenticated}">
+               <li class="${current == 'account' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li>
+               <li><a href="<spring:url value="/logout" />">Logout</a></li>
+              </c:if>
+              
+              
+<%--                <security:authorize access="hasRole('ROLE_ADMIN')"> 
               	<li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/users.html" />">Users</a></li>
-              </security:authorize>
+               </security:authorize>
               <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
               <security:authorize access="! isAuthenticated()">
 	              <li class="${current == 'login' ? 'active' : ''}"><a href="<spring:url value="/login.html" />">Login</a></li>
               </security:authorize>
-              <security:authorize access="isAuthenticated()">
+               <security:authorize access="isAuthenticated()">
               	<li class="${current == 'account' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li>
               	<li><a href="<spring:url value="/logout" />">Logout</a></li>
-              </security:authorize>
+             < </security:authorize>  --%>
+             
+             
+          
+             
+             
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

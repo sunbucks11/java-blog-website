@@ -54,7 +54,7 @@
 </form> --%>
 
 
- <form class="form-signin" role="form"  method="POST" >
+ <form class="form-signin" role="form" method="POST" >
 	<h2 class="form-signin-heading">Please sign in</h2>
 	<input type="text" name="j_username" class="form-control" placeholder="Name" required autofocus> 
 	<input type="password" name="j_password" class="form-control" placeholder="Password" required> 
