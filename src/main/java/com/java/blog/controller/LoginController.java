@@ -24,13 +24,18 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userRepository;
-
 	
+	public static final String TWO_FACTOR_AUTHENTICATION_SUCCESS = "TWO_FACTOR_AUTHENTICATION";
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
 		return "login";
 	}
 
+	
+	
+	
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processLogin(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -39,14 +44,12 @@ public class LoginController {
 		GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 		String username = request.getParameter("j_username");
 		String password = request.getParameter("j_password");
-		
-		if (checkCredentials(username, password)) 
-		{
-			request.getSession().setAttribute( "isAuthenticated", true );
-			
-			if (request.getSession().getAttribute("isAdmin") == null && 
-				request.getSession().getAttribute("isVerified") == null) 
-			{	
+
+		if (checkCredentials(username, password)) {
+			request.getSession().setAttribute("isAuthenticated", true);
+
+			if (request.getSession().getAttribute("isAdmin") == null
+					&& request.getSession().getAttribute("isVerified") == null) {
 				// user want to set up 2fa
 				final GoogleAuthenticatorKey key = googleAuthenticator
 						.createCredentials();
@@ -55,40 +58,35 @@ public class LoginController {
 				String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/"
 						+ username + "?secret=" + secret;
 
-				//modelAndView.getModelMap().put("initAuth", true);
-				//modelAndView.getModelMap().put("secretKey", secret);
+				// modelAndView.getModelMap().put("initAuth", true);
+				// modelAndView.getModelMap().put("secretKey", secret);
 				modelAndView.getModelMap().put("barCodeUrl", otpAuthURL);
-				
-				request.getSession().setAttribute( "isAdmin", true );
-				//request.getSession().setAttribute( "username", request.getParameter("j_username") );
-				return modelAndView;				
+
+				request.getSession().setAttribute("isAdmin", true);
+				// request.getSession().setAttribute( "username",
+				// request.getParameter("j_username") );
+				return modelAndView;
 			}
-			
-			if(request.getSession().getAttribute("isVerified") == null)
-			{
+
+			if (request.getSession().getAttribute("isVerified") == null) {
 				return new ModelAndView("redirect:/verification.html");
-			}
-			else{
+			} else {
 				return new ModelAndView("redirect:/index.html");
-			}			
-		}
-		else {
+			}
+		} else {
 			return new ModelAndView("redirect:/login.html");
 		}
 	}
 
-	
-	
 	private boolean checkCredentials(String username, String password) {
-		
-		if (userRepository.findByName(username) != null) 
-		{
+
+		if (userRepository.findByName(username) != null) {
 			User user = userRepository.findByName(username);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 			if ((encoder.matches(password, user.getPassword()))
 					&& (user.getName().equals(username.trim()))) {
-				
+
 				return true;
 			}
 		}

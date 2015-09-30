@@ -52,7 +52,7 @@ public class VerifyController extends HttpServlet {
 		
 			 request.getSession().setAttribute( "isVerified", true );
 			 request.getSession().setAttribute( "isAuthenticated", true );
-			 response.sendRedirect("/java-blog-website/index.html");
+			 response.sendRedirect("/java-blog-website/index.jsp");
 		} else {
 			//pw.write("<html><body><h1>Code Verification Unsuccessful</h1></body></html>");
 			response.sendRedirect("/java-blog-website/login.html");

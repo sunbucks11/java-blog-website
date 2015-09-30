@@ -51,13 +51,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>hu.meza.tools</groupId>
-				<artifactId>galib</artifactId>
-				<version>1.2</version>
-			</dependency>
-
-
-			<dependency>
 				<groupId>com.google.authenticator</groupId>
 				<artifactId>google-authenticator</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
