@@ -7,11 +7,11 @@ import com.java.blog.model.DhpUser;
 import com.java.blog.model.DhpUserRole;
 import com.java.blog.model.Password;
 import com.java.blog.model.Role;
-import com.java.blog.model.User;
+import com.java.blog.model.NqUser;
 
 public class MockDhpUserDao implements UserDao {
 
-  private List<User> users = new ArrayList<User>( );
+  private List<NqUser> users = new ArrayList<NqUser>( );
 
   public MockDhpUserDao( ) {
 	    users.add( createUser( "Janet", "password", false, "LA1", DhpUserRole.ASSESSOR ) );
@@ -19,8 +19,8 @@ public class MockDhpUserDao implements UserDao {
 	    users.add( createUser( "Steve", "password", false, "LA1", DhpUserRole.ACCOUNT_ADMINISTRATOR ) );
   }
 
-  public User loadUserByUsernameAndSite( String username, String site ) {
-    for ( User user : users ) {
+  public NqUser loadUserByUsernameAndSite( String username, String site ) {
+    for ( NqUser user : users ) {
       if ( user.getUsername( ).equals( username ) && user.getSite( ).equals( site ) ) {
         return user;
       }
@@ -49,11 +49,11 @@ public class MockDhpUserDao implements UserDao {
 //    return 0;
 //  }
 
-  public Long saveUser( User user ) {
+  public Long saveUser( NqUser user ) {
     return null;
   }
 
-  public User loadUser( Long id, String site ) {
+  public NqUser loadUser( Long id, String site ) {
     return null;
   }
 

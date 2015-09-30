@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class DhpUser extends User{
+public class DhpUser extends NqUser{
 
   private static final long serialVersionUID = 3915942213394225973L;
   private Address address;

@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class NqUser implements Serializable {
 
 private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ private static final long serialVersionUID = 1L;
   private Date lastSetPassword;
   private Set<String> roles = new HashSet<String>( );
 
-  public User( ) {
+  public NqUser( ) {
   }
 
   @Id

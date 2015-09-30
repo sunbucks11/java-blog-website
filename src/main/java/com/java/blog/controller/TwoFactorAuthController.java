@@ -3,6 +3,7 @@ package com.java.blog.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/TwoFactorAuthController")
 public class TwoFactorAuthController {
 
 	  private static Logger log = LoggerFactory.getLogger( TwoFactorAuthController.class );
