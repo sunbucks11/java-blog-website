@@ -49,13 +49,15 @@ public class AdminFilter implements Filter {
 
 		HttpSession session = request.getSession(true);
 
-		if (twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)
-				&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) {
+		
+		//if (twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
+		  if (someoneIsLoggedIn(session) && !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
+		  {
 			//response.sendRedirect("/dhp/admin/auth");
-			request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);		
+			 request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);		
 			//response.sendRedirect("/login");
-			//return;
-		}
+			return;
+		 }
 		log.info("adminFilter.doFilter skipping to next filter");
 		chain.doFilter(req, res);
 	}

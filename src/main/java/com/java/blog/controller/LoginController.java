@@ -45,7 +45,8 @@ public class LoginController {
 		String username = request.getParameter("j_username");
 		String password = request.getParameter("j_password");
 
-		if (checkCredentials(username, password)) {
+		if (checkCredentials(username, password)) 
+		{
 			request.getSession().setAttribute("isAuthenticated", true);
 
 			if (request.getSession().getAttribute("isAdmin") == null
