@@ -19,6 +19,8 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+
 @Component
 public class AdminFilter implements Filter {
 
@@ -50,14 +52,22 @@ public class AdminFilter implements Filter {
 		HttpSession session = request.getSession(true);
 
 		
-		//if (twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
-		  if (someoneIsLoggedIn(session) && !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
+		  if (twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session) && !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) 
+	   // if (someoneIsLoggedIn(session) && !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
 		  {
-			//response.sendRedirect("/dhp/admin/auth");
-			 request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);		
-			//response.sendRedirect("/login");
+			// response.sendRedirect("/java-blog-website/TwoFactorAuthController");
+			// response.sendRedirect("/dhp/admin/auth");
+		    // request.getRequestDispatcher("/admin/auth").forward(request,response);
+			request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);
 			return;
 		 }
+		
+		 if(TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT)
+		 {
+			 request.getRequestDispatcher("/VerificationController").forward(request,response);
+			 return; 
+		 }
+		  
 		log.info("adminFilter.doFilter skipping to next filter");
 		chain.doFilter(req, res);
 	}

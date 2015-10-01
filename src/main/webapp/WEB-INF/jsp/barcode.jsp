@@ -11,6 +11,62 @@
 
 <%@include file="../layout/taglib.jsp"%>
 
+
+
+<style>
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+#formLbl {
+    display: block;
+    text-align: center;
+    line-height: 150%;
+    font-size: 16px;
+}
+</style>
+
+
+
+
+
 <style>
 #mask {
 	position: absolute;
@@ -192,8 +248,21 @@ display: inline-block;
 		
 					
 			<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<a href="verification.html" type="button" class="btn btn-default" style="background-image: linear-gradient(to bottom,#31CE12 0,#31CE12 100%);; font-weight: bold;">Verify</a> 
+		    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+			<!-- <a href="/VerificationController" type="button" class="btn btn-default" style="background-image: linear-gradient(to bottom,#31CE12 0,#31CE12 100%); font-weight: bold;">Verify</a> --> 
+			
+			
+			
+			<form class="form-signin" role="form" method="POST">
+			 <!-- <input type="text" name="verfication_code" class="form-control" placeholder="Verfication Code" required autofocus>  -->
+			 <!-- <button class="btn btn-default" style="background-image: linear-gradient(to bottom,#31CE12 0,#31CE12 100%); font-weight: bold;" type="submit">Verify</button> -->
+			
+			  <label id="formLbl">Enter Your Key</label> 
+			  <input type="text" name="code" class="form-control" placeholder="Verfication Code" required><br /> 
+    		   <input class="btn btn-lg btn-primary btn-block" type="submit" value="Verify">
+			</form> 
+			
+			
 			</div>	
 			
 			

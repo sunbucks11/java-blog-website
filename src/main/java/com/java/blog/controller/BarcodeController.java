@@ -29,5 +29,5 @@ public class BarcodeController {
          modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );
          modelAndView.getModelMap( ).put( "initAuth", true ); 
          return modelAndView;	
-    }    		    
+    }   		    
 }

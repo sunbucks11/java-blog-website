@@ -1,5 +1,7 @@
 package com.java.blog.model;
 
+import com.java.blog.entity.User;
+
 public class TwoFactorAuthForm {
 
 	  private String secretKey;
@@ -7,9 +9,14 @@ public class TwoFactorAuthForm {
 	  private Boolean twoFactorAuthInitialised;
 	  private Integer verificationCode;
 	  
-	  public TwoFactorAuthForm( DhpUser dhpUser ) {
-		    this.secretKey = dhpUser.getSecretKey( );
-		    this.twoFactorAuthInitialised = dhpUser.getTwoFactorAuthInitialised( );
+//	  public TwoFactorAuthForm( DhpUser dhpUser ) {
+//		    this.secretKey = dhpUser.getSecretKey( );
+//		    this.twoFactorAuthInitialised = dhpUser.getTwoFactorAuthInitialised( );
+//		  }
+	  
+	  public TwoFactorAuthForm( User user ) {
+		    this.secretKey = user.getSecretKey( );
+		    this.twoFactorAuthInitialised = user.getTwoFactorAuthInitialised( );
 		  }
 
 		  public TwoFactorAuthForm( ) {

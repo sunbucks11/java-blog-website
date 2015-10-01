@@ -39,6 +39,26 @@ public class User {
 
 	private boolean enabled;
 	
+	private String secretKey;
+	
+	private Boolean twoFactorAuthInitialised;
+	
+	public String getSecretKey() {
+		return secretKey;
+	}
+
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
+	}
+
+	public Boolean getTwoFactorAuthInitialised() {
+		return twoFactorAuthInitialised;
+	}
+
+	public void setTwoFactorAuthInitialised(Boolean twoFactorAuthInitialised) {
+		this.twoFactorAuthInitialised = twoFactorAuthInitialised;
+	}
+
 	private boolean isAuthenticated; 
 
 	@ManyToMany

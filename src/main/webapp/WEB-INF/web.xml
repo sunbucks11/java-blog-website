@@ -21,6 +21,8 @@
     <url-pattern>*.json</url-pattern>
     <url-pattern>*.xml</url-pattern>
     <url-pattern>/TwoFactorAuthController</url-pattern>
+    <url-pattern>/VerificationController</url-pattern>
+ <!--    <url-pattern>/LoginController</url-pattern> -->
   </servlet-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

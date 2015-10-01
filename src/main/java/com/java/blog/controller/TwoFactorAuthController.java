@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,47 +25,93 @@ import com.java.blog.entity.User;
 import com.java.blog.model.DhpUser;
 import com.java.blog.model.TwoFactorAuthForm;
 import com.java.blog.repository.UserRepository;
+import com.java.blog.service.UserService;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
+
 
 
 @Controller
 @RequestMapping("/TwoFactorAuthController")
+//@RequestMapping("/admin/auth")
 public class TwoFactorAuthController {
 
 	  private static Logger log = LoggerFactory.getLogger( TwoFactorAuthController.class );
 
 	  public static final String TWO_FACTOR_AUTHENTICATION_SUCCESS = "TWO_FACTOR_AUTHENTICATION";
+	  public static boolean TWO_FACTOR_AUTHENTICATION_INT = false;
+	  public static boolean TWO_FACTOR_VERIFIED = false;
 	  private static final String BASE_URL = "/admin/auth";
+
+	 // @Autowired
+	 // private UserRepository userRepository;
 	  
-	  
-		@Autowired
-		private UserRepository userRepository;
+	  @Autowired
+	  private UserService userService;
 	  
 	  private UserDao userDao;
-
-//	  @Autowired
-//	  public void setUserDao( UserDao userDao ) {
-//	    this.userDao = userDao;
-//	  }
-	  
 	  
 	  @RequestMapping(method = RequestMethod.GET)
 	  public ModelAndView handleGetTwoFactorAuth( HttpServletRequest request, HttpServletResponse response ) throws IOException {
 	   
 	    ModelAndView modelAndView = new ModelAndView("barcode");
-		GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
-		//String username = request.getParameter("j_username");
-		//String password = request.getParameter("j_password");
+	   // ModelAndView modelAndView = new ModelAndView( "auth" );
+		//GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
 		
-		 HttpSession session = request.getSession( true );
+		//TwoFactorAuthForm twoFactorAuthForm;
+		
+		
+		HttpSession session = request.getSession( true );
 		SecurityContextImpl sci = ( SecurityContextImpl ) session.getAttribute( "SPRING_SECURITY_CONTEXT" );
 	    String username = null;
 
 	    if ( sci != null ) {
 	      UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
 	      username = cud.getUsername( );
+	      userService.findOne(username);
+	      TwoFactorAuthForm twoFactorAuthForm = new TwoFactorAuthForm(  userService.findOne(username));
 
+	      System.out.println("Current User: " +  userService.findOne(username).getName());
+	        
+	      try {
+	      	    	  
+	      //if( userService.findOne(username).getTwoFactorAuthInitialised() == null || ! userService.findOne(username).getTwoFactorAuthInitialised()){
+	    	if( userService.findOne(username).getTwoFactorAuthInitialised() == null && !TWO_FACTOR_AUTHENTICATION_INT){
+	    	  GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator( );
+
+	          final GoogleAuthenticatorKey key = googleAuthenticator.createCredentials( );
+	          final String secret = key.getKey( );
+
+	          
+	          //String otpAuthURL = GoogleAuthenticatorQRGenerator.getOtpAuthURL( currentUser.getName(), currentUser.getEmail( ),key );
+				String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/"
+						+  userService.findOne(username).getName() + "?secret=" + secret;
+	          				
+	          modelAndView.getModelMap( ).put( "secretKey", secret );
+	          modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );
+	          modelAndView.getModelMap( ).put( "initAuth", true );
+	          //userService.findOne(username).setTwoFactorAuthInitialised(true);
+			  request.getSession().setAttribute("secretKey", secret);
+	          TWO_FACTOR_AUTHENTICATION_INT = true; 
+	      }
+	      else
+	      {
+	    	  request.getRequestDispatcher("/VerificationController").forward(request,response);
+	      }
+	      
+	      modelAndView.getModelMap( ).put( "formBean", twoFactorAuthForm );
+	    } catch ( Exception e ) {
+	        e.printStackTrace( );
+	        modelAndView = redirectWithMessage( "/", "Something went wrong while authenticating user" );
+	      }	      
+	    }
+	    
+	    return modelAndView;
+	  }
+
+	      /*
+	      
 			request.getSession().setAttribute("isAuthenticated", true);
 
 			if (request.getSession().getAttribute("isAdmin") == null
@@ -85,12 +130,18 @@ public class TwoFactorAuthController {
 				modelAndView.getModelMap().put("barCodeUrl", otpAuthURL);
 
 				request.getSession().setAttribute("isAdmin", true);
+				//TWO_FACTOR_AUTHENTICATION_SUCCESS = true; 
+				//request.getSession( true ).setAttribute( TWO_FACTOR_AUTHENTICATION_SUCCESS, true );
+				userRepository.findByName(username).setTwoFactorAuthInitialised(true);
+				
 				// request.getSession().setAttribute( "username",
 				// request.getParameter("j_username") );
 				return modelAndView;
 			}
 
-			if (request.getSession().getAttribute("isVerified") == null) {
+			//if (request.getSession().getAttribute("isVerified") == null) 
+			if (request.getSession( true ).getAttribute(TWO_FACTOR_AUTHENTICATION_SUCCESS) == "true") 
+			{
 				return new ModelAndView("redirect:/verification.html");
 			} else {
 				return new ModelAndView("redirect:/index.html");
@@ -100,6 +151,8 @@ public class TwoFactorAuthController {
 	    return modelAndView;
 	      
 	    }
+	  
+	  */
 		
 		
 	    /*
@@ -180,7 +233,7 @@ public class TwoFactorAuthController {
 	  
 	  
 	  
-	  @RequestMapping(method = RequestMethod.POST, value = "/verify")
+	  @RequestMapping(method = RequestMethod.POST, value = "verify")
 	  public ModelAndView handleVerification( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("formBean")
 	      TwoFactorAuthForm twoFactorAuthForm, BindingResult bindingResult ) throws ServletException, IOException {
 
@@ -214,7 +267,7 @@ public class TwoFactorAuthController {
 	  
 	  
 	  
-	  @RequestMapping(method = RequestMethod.POST, value = "/init")
+	  @RequestMapping(method = RequestMethod.POST, value = "init")
 	  public ModelAndView handleTwoFactorAuthInitialisation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("formBean")
 	      TwoFactorAuthForm twoFactorAuthForm, BindingResult bindingResult ) throws ServletException, IOException {
 

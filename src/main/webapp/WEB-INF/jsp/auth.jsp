@@ -1,4 +1,4 @@
-
+<%@include file="../layout/taglib.jsp"%>
 <h2 id="section">
   Second Step Verification Required
 </h2>
@@ -10,10 +10,12 @@
 
     <c:choose>
         <c:when test="${initAuth}">
-          <c:url var="formUrl" value="/admin/auth/init" />
+          <%-- <c:url var="formUrl" value="/admin/auth/init" /> --%>
+          <c:url var="formUrl" value="/TwoFactorAuthController/init" />
         </c:when>
         <c:otherwise>
-          <c:url var="formUrl" value="/admin/auth/verify" />
+          <%-- <c:url var="formUrl" value="/admin/auth/verify" /> --%>
+          <c:url var="formUrl" value="/TwoFactorAuthController/verify" />
         </c:otherwise>
     </c:choose>
 

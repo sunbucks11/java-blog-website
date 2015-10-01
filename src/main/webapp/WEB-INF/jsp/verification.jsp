@@ -53,6 +53,6 @@
 <!-- <form class="form-signin" method="post"> -->
   <h1>Verification Code</h1> <br />
   <label>Enter Your Key</label> <input type="text" name="code"
-    class="form-control" placeholder="Name" required><br /> <input
-    class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
+    class="form-control" placeholder="Name" required><br /> 
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
 </form>  

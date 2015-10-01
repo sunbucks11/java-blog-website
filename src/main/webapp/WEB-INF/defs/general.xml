@@ -61,6 +61,12 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/barcode.jsp" />
 		<put-attribute name="current" value="barcode" />
 	</definition>
+	
+ <definition name="auth" extends="common">
+ 	<put-attribute name="title" value="auth" />
+    <put-attribute name="body" value="/WEB-INF/jsp/auth.jsp"/>
+    <put-attribute name="current" value="auth" />
+  </definition>
 
 
 
