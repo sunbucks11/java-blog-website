@@ -85,14 +85,15 @@ public class VerificationController {
 				 request.getSession().setAttribute( "isAuthenticated", true );
 				 //response.sendRedirect("/java-blog-website/index.jsp");
 				// response.sendRedirect("/java-blog-website/verification.html");
-				 request.getRequestDispatcher("/LoginController").forward(request,response);
-				 return "index.html"; 
+				 //request.getRequestDispatcher("/LoginController").forward(request,response);
+				 return "index"; 
 			} else {
-				pw.write("<html><body><h1>Code Verification Unsuccessful</h1></body></html>");
+				//pw.write("<html><body><h1>Code Verification Unsuccessful</h1></body></html>");
 				//response.sendRedirect("/java-blog-website/login.html");
-				 return "login.html";
+				//request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);
+			   // return "/LoginController";
 				//request.getRequestDispatcher("/LoginController").forward(request,response);
-				//return; 
+				 return "login"; 
 			}
 		  
 	    }
@@ -128,7 +129,7 @@ public class VerificationController {
 	    }
 	    */
    
-    return "login.html";
+    return "login";
   }
   
   
