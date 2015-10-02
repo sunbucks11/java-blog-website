@@ -69,5 +69,11 @@
   </definition>
 
 
+ <definition name="error" extends="common">
+ 	<put-attribute name="title" value="error" />
+    <put-attribute name="body" value="/WEB-INF/jsp/error.jsp"/>
+    <put-attribute name="current" value="error" />
+  </definition>
+
 
 </tiles-definitions>

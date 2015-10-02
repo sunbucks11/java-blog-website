@@ -54,7 +54,7 @@
               <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
               
               
-<%--              <c:if test="${not empty isVerified}">
+            <c:if test="${not empty isVerified}">
 			    <li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/users.html" />">Users</a></li>
 			</c:if>
               
@@ -64,22 +64,25 @@
               
               <c:if test="${not empty isAuthenticated}">
                <li class="${current == 'account' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li>
-               <li><a href="<spring:url value="/logout" />">Logout</a></li>
-              </c:if> --%>
+
+				<li> <a href="<c:url value="j_spring_security_logout" />" > Logout</a></li>
+               
+             <%--   <li><a href="<spring:url value="/logout" />">Logout</a></li> --%>
+              </c:if> 
               
-              
-              <security:authorize access="hasRole('ROLE_ADMIN')"> 
+       
+ <%--           <security:authorize access="hasRole('ROLE_ADMIN')"> 
               	<li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/users.html" />">Users</a></li>
                </security:authorize>
-             <%--  <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li> --%>
+              <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
               <security:authorize access="! isAuthenticated()">
 	              <li class="${current == 'login' ? 'active' : ''}"><a href="<spring:url value="/login.html" />">Login</a></li>
               </security:authorize>
                <security:authorize access="isAuthenticated()">
               	<li class="${current == 'account' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li>
               	<li><a href="<spring:url value="/logout" />">Logout</a></li>
-              </security:authorize>  
-             
+              </security:authorize>   --%>
+
              
           
              

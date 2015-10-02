@@ -41,32 +41,48 @@ public class AdminFilter implements Filter {
 		String requestedUri = request.getRequestURL().toString();
 		
 		// allow all resources to get passed this filter
+	
 		log.info("requestedUri is:" + requestedUri);
 		if (requestedUri.matches(".*[css|jpg|png|gif|js]")
 				|| requestedUri.contains("admin/auth")
-				|| requestedUri.contains("admin/j_spring_security_logout")) {
+				|| requestedUri.contains("/j_spring_security_logout")) {
 			chain.doFilter(request, response);
 			return;
 		}
 
 		HttpSession session = request.getSession(true);
-
 		
-		  if (twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session) && !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) 
+		
+		SecurityContextImpl sci = ( SecurityContextImpl ) session.getAttribute( "SPRING_SECURITY_CONTEXT" );
+	    String username = null;
+
+	    if ( sci != null ) {
+	      UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
+	      username = cud.getUsername( );
+	   
+		
+
+		  if (username.equalsIgnoreCase("admin")  && twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session) && !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) 
 	   // if (someoneIsLoggedIn(session) && !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
 		  {
 			// response.sendRedirect("/java-blog-website/TwoFactorAuthController");
-			// response.sendRedirect("/dhp/admin/auth");
-		    // request.getRequestDispatcher("/admin/auth").forward(request,response);
 			request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);
 			return;
 		 }
 		
-		 if(TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT)
+		  if(request.getSession().getAttribute("isVerified") != null){
+			  boolean isVerified = (boolean) request.getSession().getAttribute("isVerified");
+			  System.out.println("IS VERIFIED: " +  request.getSession().getAttribute("isVerified"));
+		  }
+
+
+		  
+		 if(username.equalsIgnoreCase("admin") && TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && request.getSession().getAttribute("isVerified") == null)
 		 {
 			 request.getRequestDispatcher("/VerificationController").forward(request,response);
 			 return; 
 		 }
+	    }
 		  
 		log.info("adminFilter.doFilter skipping to next filter");
 		chain.doFilter(req, res);

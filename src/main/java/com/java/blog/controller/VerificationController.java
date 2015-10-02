@@ -29,14 +29,15 @@ import home.test.googauth.GoogleAuthenticator;
 @RequestMapping("/VerificationController")
 public class VerificationController {
 	
-	private static Logger log = LoggerFactory.getLogger( TwoFactorAuthController.class );
-	private static final String BASE_URL = "/admin/auth";
+//	private static Logger log = LoggerFactory.getLogger( TwoFactorAuthController.class );
+//	private static final String BASE_URL = "IndexController";
 	  
 	@Autowired
 	private UserService userService;
 	  
 	
-  @RequestMapping("/verification")
+  //@RequestMapping("/verification")
+  @RequestMapping(method = RequestMethod.GET)
   public String verification() {
     return "verification";
   }
@@ -44,20 +45,18 @@ public class VerificationController {
   
   
   @RequestMapping(method = RequestMethod.POST)
- // public ModelAndView handleTwoFactorAuthInitialisation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("formBean") TwoFactorAuthForm twoFactorAuthForm, BindingResult bindingResult ) throws ServletException, IOException { 
-	  public String handleTwoFactorAuthInitialisation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("formBean")
+  public void handleTwoFactorAuthInitialisation( HttpServletRequest request, HttpServletResponse response, @ModelAttribute("formBean")
       TwoFactorAuthForm twoFactorAuthForm, BindingResult bindingResult ) throws ServletException, IOException {
 	  
-	  ModelAndView modelAndView = new ModelAndView( "index" );
+	 // ModelAndView modelAndView = new ModelAndView( "index" );
 	  
 		HttpSession session = request.getSession( true );
 		SecurityContextImpl sci = ( SecurityContextImpl ) session.getAttribute( "SPRING_SECURITY_CONTEXT" );
-	    String username = null;
 
 	    if ( sci != null ) 
 	    {
-	      UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
-	      username = cud.getUsername( );
+	     // UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
+	      //String username = cud.getUsername( );
 		 // Integer code = twoFactorAuthForm.getVerificationCode( );
 
 
@@ -74,26 +73,30 @@ public class VerificationController {
 			//Get the secret key from the session , you will get it from the db.
 			String savedSecret = (String)request.getSession().getAttribute("secretKey");
 			
+			if(savedSecret == null){
+				userService.findOne("admin").getSecretKey();
+			}
+			
+	    	  
+			
+//			if(savedSecret != null && !savedSecret.isEmpty())
+//			{
+//				userService.findOne("admin").setSecretKey(savedSecret);
+//			}
+			
 			boolean result = ga.check_code(savedSecret, code, t);
 			
-			PrintWriter pw = response.getWriter();
+			//PrintWriter pw = response.getWriter();
 			
 			if (result) {
 				//pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");	
-			
 				 request.getSession().setAttribute( "isVerified", true );
 				 request.getSession().setAttribute( "isAuthenticated", true );
-				 //response.sendRedirect("/java-blog-website/index.jsp");
-				// response.sendRedirect("/java-blog-website/verification.html");
-				 //request.getRequestDispatcher("/LoginController").forward(request,response);
-				 return "index"; 
+				 request.getRequestDispatcher("/IndexController").forward(request,response);
+				// return "index"; 
 			} else {
-				//pw.write("<html><body><h1>Code Verification Unsuccessful</h1></body></html>");
-				//response.sendRedirect("/java-blog-website/login.html");
-				//request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);
-			   // return "/LoginController";
-				//request.getRequestDispatcher("/LoginController").forward(request,response);
-				 return "login"; 
+				//pw.write("<html><body><h1>Code Verification Unsuccessful please contact the Administrator</h1></body></html>");
+				 request.getRequestDispatcher("/ErrorController").forward(request,response);
 			}
 		  
 	    }
@@ -129,25 +132,25 @@ public class VerificationController {
 	    }
 	    */
    
-    return "login";
+   // return modelAndView;
   }
   
   
   
   
   
-  private ModelAndView handleInvalidVerificationCode( HttpServletRequest request ) {
-	    log.info( "incorrect code" );
-	    request.getSession( true ).setAttribute( TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_SUCCESS, false );
-	    return redirectWithMessage( BASE_URL, "Verification code is invalid" );
-	  }
+//  private ModelAndView handleInvalidVerificationCode( HttpServletRequest request ) {
+//	    log.info( "incorrect code" );
+//	    request.getSession( true ).setAttribute( TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_SUCCESS, false );
+//	    return redirectWithMessage( BASE_URL, "Verification code is invalid" );
+//	  }
   
   
-  
-  private ModelAndView redirectWithMessage( String redirectUrl, String errorMessage ) {
-	    ModelAndView mav = new ModelAndView( "redirect:" + redirectUrl );
-	    mav.getModelMap( ).put( "message", errorMessage );
-	    return mav;
-	  }
+//  
+//  private ModelAndView redirectWithMessage( String redirectUrl, String errorMessage ) {
+//	    ModelAndView mav = new ModelAndView( "redirect:" + redirectUrl );
+//	    mav.getModelMap( ).put( "message", errorMessage );
+//	    return mav;
+//	  }
 
 }

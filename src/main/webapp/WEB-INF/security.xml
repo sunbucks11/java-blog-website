@@ -12,8 +12,12 @@
 		<intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')" />
  		<intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')" /> 
 		<intercept-url pattern="/account**" access="hasRole('ROLE_USER')" />
+		
+		<intercept-url pattern="/index*" access="hasRole('ROLE_ADMIN')" />
+		
 		<form-login login-page="/login.html" />
-		<logout logout-url="/logout" />
+		<!-- <logout logout-url="/logout" /> -->
+		<logout logout-success-url="/index" />
 	</http>
 
 	<authentication-manager>

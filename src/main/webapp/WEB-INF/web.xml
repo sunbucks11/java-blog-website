@@ -22,7 +22,9 @@
     <url-pattern>*.xml</url-pattern>
     <url-pattern>/TwoFactorAuthController</url-pattern>
     <url-pattern>/VerificationController</url-pattern>
-   <url-pattern>/LoginController</url-pattern>
+    <url-pattern>/LoginController</url-pattern>
+    <url-pattern> /IndexController</url-pattern>
+    <url-pattern> /ErrorController</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -53,8 +55,6 @@
 	<filter-mapping>
 		<filter-name>adminFilter</filter-name>
 		 <url-pattern>/*</url-pattern>
-<!-- 		<url-pattern>/users**</url-pattern>
-		<url-pattern>/users/**</url-pattern> -->
 	</filter-mapping>
   
   

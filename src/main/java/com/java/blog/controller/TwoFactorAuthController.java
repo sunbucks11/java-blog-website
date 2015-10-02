@@ -93,10 +93,12 @@ public class TwoFactorAuthController {
 	          modelAndView.getModelMap( ).put( "initAuth", true );
 	          //userService.findOne(username).setTwoFactorAuthInitialised(true);
 			  request.getSession().setAttribute("secretKey", secret);
+			  userService.findOne(username).setSecretKey(secret);			  
 	          TWO_FACTOR_AUTHENTICATION_INT = true; 
 	      }
 	      else
 	      {
+	    	  //String savedSecret = (String)request.getSession().getAttribute("secretKey");
 	    	  request.getRequestDispatcher("/VerificationController").forward(request,response);
 	      }
 	      

@@ -33,9 +33,6 @@ public class LoginController {
 	}
 
 	
-	
-	
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processLogin(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -64,8 +61,6 @@ public class LoginController {
 				modelAndView.getModelMap().put("barCodeUrl", otpAuthURL);
 
 				request.getSession().setAttribute("isAdmin", true);
-				// request.getSession().setAttribute( "username",
-				// request.getParameter("j_username") );
 				return modelAndView;
 			}
 
