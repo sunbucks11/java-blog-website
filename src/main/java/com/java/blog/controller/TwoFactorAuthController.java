@@ -41,6 +41,9 @@ public class TwoFactorAuthController {
 
 	  public static final String TWO_FACTOR_AUTHENTICATION_SUCCESS = "TWO_FACTOR_AUTHENTICATION";
 	  public static boolean TWO_FACTOR_AUTHENTICATION_INT = false;
+	  
+	  public static GoogleAuthenticatorKey SecretKey; 
+	  
 	  public static boolean TWO_FACTOR_VERIFIED = false;
 	  private static final String BASE_URL = "/admin/auth";
 
@@ -93,7 +96,8 @@ public class TwoFactorAuthController {
 	          modelAndView.getModelMap( ).put( "initAuth", true );
 	          //userService.findOne(username).setTwoFactorAuthInitialised(true);
 			  request.getSession().setAttribute("secretKey", secret);
-			  userService.findOne(username).setSecretKey(secret);			  
+			  userService.findOne(username).setSecretKey(secret);	
+			  this.SecretKey = key;
 	          TWO_FACTOR_AUTHENTICATION_INT = true; 
 	      }
 	      else

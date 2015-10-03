@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.blog.model.TwoFactorAuthForm;
 import com.java.blog.service.UserService;
+import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+
 //import com.warrenstrange.googleauth.GoogleAuthenticator;
 import home.test.googauth.GoogleAuthenticator;
 
@@ -74,7 +76,16 @@ public class VerificationController {
 			String savedSecret = (String)request.getSession().getAttribute("secretKey");
 			
 			if(savedSecret == null){
-				userService.findOne("admin").getSecretKey();
+				
+			      UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
+			      String username = cud.getUsername( );
+				userService.findOne(username).getSecretKey();
+
+				GoogleAuthenticatorKey key = TwoFactorAuthController.SecretKey;
+				
+				System.out.println("key is: " + key.getKey());
+				savedSecret = key.getKey();
+				
 			}
 			
 	    	  
