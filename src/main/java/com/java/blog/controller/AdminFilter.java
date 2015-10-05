@@ -70,14 +70,25 @@ public class AdminFilter implements Filter {
 			return;
 		 }
 		
+
 		  if(request.getSession().getAttribute("isVerified") != null){
 			  boolean isVerified = (boolean) request.getSession().getAttribute("isVerified");
 			  System.out.println("IS VERIFIED: " +  request.getSession().getAttribute("isVerified"));
 		  }
-
-
 		  
-		 if(username.equalsIgnoreCase("admin") && TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && request.getSession().getAttribute("isVerified") == null)
+		  if(request.getSession().getAttribute("isVerified") != null && (boolean)request.getSession().getAttribute("isVerified") == false){
+			request.getRequestDispatcher("/LoginController").forward(request,response);
+			return; 
+		  }
+
+
+		 //if(username.equalsIgnoreCase("admin") && TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && request.getSession().getAttribute("isVerified") == null) 
+		 if(username.equalsIgnoreCase("admin") && 
+			TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && 
+			request.getSession().getAttribute("isVerified") == null 
+			/* && (boolean)request.getSession().getAttribute("isVerified") == true */
+//			&& (boolean)request.getSession().getAttribute("isError") == false
+			)
 		 {
 			 request.getRequestDispatcher("/VerificationController").forward(request,response);
 			 return; 

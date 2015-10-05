@@ -59,12 +59,7 @@ public class TwoFactorAuthController {
 	  public ModelAndView handleGetTwoFactorAuth( HttpServletRequest request, HttpServletResponse response ) throws IOException {
 	   
 	    ModelAndView modelAndView = new ModelAndView("barcode");
-	   // ModelAndView modelAndView = new ModelAndView( "auth" );
-		//GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
-		
-		//TwoFactorAuthForm twoFactorAuthForm;
-		
-		
+
 		HttpSession session = request.getSession( true );
 		SecurityContextImpl sci = ( SecurityContextImpl ) session.getAttribute( "SPRING_SECURITY_CONTEXT" );
 	    String username = null;
@@ -91,11 +86,12 @@ public class TwoFactorAuthController {
 				String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/"
 						+  userService.findOne(username).getName() + "?secret=" + secret;
 	          				
-	          modelAndView.getModelMap( ).put( "secretKey", secret );
+	           modelAndView.getModelMap( ).put( "secretKey", secret );
 	          modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );
 	          modelAndView.getModelMap( ).put( "initAuth", true );
 	          //userService.findOne(username).setTwoFactorAuthInitialised(true);
 			  request.getSession().setAttribute("secretKey", secret);
+			  request.getSession().setAttribute("isError", false);
 			  userService.findOne(username).setSecretKey(secret);	
 			  this.SecretKey = key;
 	          TWO_FACTOR_AUTHENTICATION_INT = true; 

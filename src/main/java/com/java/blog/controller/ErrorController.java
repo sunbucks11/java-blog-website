@@ -1,5 +1,8 @@
 package com.java.blog.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +19,9 @@ public class ErrorController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String indexPost(Model model) {
+	public String indexPost(Model model, HttpServletRequest request, HttpServletResponse response) {
 		model.addAttribute("error", "Wrong Verfication Number, Please Contact the Administrator.");
+		//request.getSession().setAttribute("isVerified", false);
 		return "error";
 	}
 

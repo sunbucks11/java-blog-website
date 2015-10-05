@@ -20,6 +20,7 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
 @RequestMapping("/login")
+//@RequestMapping("/LoginController")
 public class LoginController {
 
 	@Autowired
