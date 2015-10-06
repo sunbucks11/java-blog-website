@@ -93,7 +93,7 @@ public class VerificationController {
 				
 				request.getSession().setAttribute("isVerifiedError", false);
 				
-				TwoFactorAuthController.isVerificationRequired = true; 
+				//TwoFactorAuthController.isVerificationRequired = true; 
 				
 				userService.findOne(username).setVerified(false);
 				userService.findOne(username).setVerifiedError(true);

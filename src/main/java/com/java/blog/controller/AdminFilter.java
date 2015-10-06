@@ -80,11 +80,17 @@ public class AdminFilter implements Filter {
 		  
 			if( requestedUri.contains("/j_spring_security_logout")){
 				TwoFactorAuthController.isVerificationRequired = true; 
-				request.getRequestDispatcher("/IndexController").forward(request,response);
-				 return; 
+				chain.doFilter(request, response);
+				return; 
 			}
 		  
-		  
+			
+			
+			if(requestedUri.contains("/j_spring_security_check")){
+				//TwoFactorAuthController.isVerificationRequired = true; 
+				chain.doFilter(request, response);
+				return; 
+			}
 		  
 		  
 		
@@ -99,7 +105,7 @@ public class AdminFilter implements Filter {
 		  {
 			  				
 			  
-			  if(TwoFactorAuthController.isResetTwoFactorAuth && TwoFactorAuthController.isVerificationRequired)
+			  if(TwoFactorAuthController.isResetTwoFactorAuth)
 			  {
 			    	twoFactorAuthenticationEnabled = true;
 			    	TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT = false; 
@@ -110,6 +116,13 @@ public class AdminFilter implements Filter {
 		  }
 
 
+		  System.out.println("USERNAME: " + username.equalsIgnoreCase("admin"));
+		  System.out.println("twoFactorAuthenticationEnabled:@ " + twoFactorAuthenticationEnabled);
+		  System.out.println("someoneIsLoggedIn: " +  someoneIsLoggedIn(session));
+		  System.out.println("isUserAlreadyAuthenticatedWithTwoFactorAuth: " + isUserAlreadyAuthenticatedWithTwoFactorAuth(session));
+		  System.out.println("TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT: " + TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT );
+		  
+		  
 		  if (username.equalsIgnoreCase("admin")  && 
 				  twoFactorAuthenticationEnabled  && 
 				  someoneIsLoggedIn(session)	  && 

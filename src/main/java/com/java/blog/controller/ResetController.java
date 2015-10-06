@@ -25,6 +25,7 @@ public class ResetController {
 	public String indexPost(Model model, HttpServletRequest request, HttpServletResponse response) {
 	  TwoFactorAuthController.isResetTwoFactorAuth = true; 
 	  TwoFactorAuthController.isVerificationRequired = true; 
+	  TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT = false; 
 			
 		return "login";
 	}
