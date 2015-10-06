@@ -28,7 +28,7 @@ public class VerificationController {
 
 	@Autowired
 	private UserService userService;
-
+	
 	// @RequestMapping("/verification")
 	@RequestMapping(method = RequestMethod.GET)
 	public String verification() {
@@ -57,12 +57,13 @@ public class VerificationController {
 			// Get the secret key from the session , you will get it from the
 			// db.
 			String savedSecret = (String) request.getSession().getAttribute("secretKey");
+			String username = null;
 
 			if (savedSecret == null) {
 
 				UserDetails cud = (UserDetails) sci.getAuthentication()
 						.getPrincipal();
-				String username = cud.getUsername();
+				username = cud.getUsername();
 				userService.findOne(username).getSecretKey();
 
 				GoogleAuthenticatorKey key = TwoFactorAuthController.SecretKey;
@@ -73,19 +74,30 @@ public class VerificationController {
 
 			boolean result = ga.check_code(savedSecret, code, t);
 
-			if (result) {
+			if (result && username != null) {
 				// pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");
+				
 				request.getSession().setAttribute("isVerified", true);
 				request.getSession().setAttribute("isAuthenticated", true);
-				request.getRequestDispatcher("/IndexController").forward(
-						request, response);
+				
+				userService.findOne(username).setAuthenticated(true);
+				userService.findOne(username).setVerified(true);
+				userService.findOne(username).setVerifiedError(false);
+				TwoFactorAuthController.isVerificationRequired = false; 
+				request.getRequestDispatcher("/IndexController").forward(request, response);
 				// return "index";
 			} else {
 				// pw.write("<html><body><h1>Code Verification Unsuccessful please contact the Administrator</h1></body></html>");
-				request.getSession().setAttribute("isError", true);
-				request.getSession().setAttribute("isVerified", false);
-				request.getRequestDispatcher("/ErrorController").forward(
-						request, response);
+				//request.getSession().setAttribute("isError", true);
+					//request.getSession().setAttribute("isVerified", false);
+				
+				request.getSession().setAttribute("isVerifiedError", false);
+				
+				TwoFactorAuthController.isVerificationRequired = true; 
+				
+				userService.findOne(username).setVerified(false);
+				userService.findOne(username).setVerifiedError(true);
+				request.getRequestDispatcher("/ErrorController").forward(request, response);
 			}
 		}
 	}

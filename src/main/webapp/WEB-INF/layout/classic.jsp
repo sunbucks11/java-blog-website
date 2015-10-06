@@ -46,11 +46,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<spring:url value="/" />">Java Blog</a>
+            <a class="navbar-brand" href="<spring:url value="/index.html" />">Java Blog</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a></li>
+              <li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/index.html" />'>Home</a></li>
               <li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
               
               

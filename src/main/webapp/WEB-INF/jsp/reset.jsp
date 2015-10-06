@@ -51,29 +51,10 @@ h1{
 	color:red;
 }
 
-h4{
-  color:blue;
-}
 </style>
 
 
 
 
-<h1>Error: </h1>
-<h3>${error}</h3>
-
-<!-- <form class="form-signin" action="VerifyController" method="post">
-<form class="form-signin" method="post">
-  <h1>Verification Code</h1> <br />
-  <label>Enter Your Key</label> <input type="text" name="code"
-    class="form-control" placeholder="Name" required><br /> 
-    <input class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
-</form>   -->
-
-
-<br /><br />
-
-<form method="post" action="/java-blog-website/ErrorController/Reset">
-    <h4>Click the button below to Reset Two Factor Authentication </h4> 
-    <input class="btn btn-lg btn-primary " type="submit" value="Reset">
-</form>
+<!-- <h1>Error: </h1> -->
+<h3>Successfully Resert</h3>

@@ -43,6 +43,46 @@ public class User {
 	
 	private Boolean twoFactorAuthInitialised;
 	
+	private boolean isAuthenticated; 
+	
+	private boolean isVerified; 
+	
+	private boolean isVerifiedError; 
+	
+	private boolean isResetTwoFactorAuth;
+	
+
+	public boolean isResetTwoFactorAuth() {
+		return isResetTwoFactorAuth;
+	}
+
+	public void setResetTwoFactorAuth(boolean isResetTwoFactorAuth) {
+		this.isResetTwoFactorAuth = isResetTwoFactorAuth;
+	}
+
+	public boolean isVerifiedError() {
+		return isVerifiedError;
+	}
+
+	public void setVerifiedError(boolean isVerifiedError) {
+		this.isVerifiedError = isVerifiedError;
+	}
+
+	public boolean isVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
+	}
+
+	@ManyToMany
+	@JoinTable
+	private List<Role> roles;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	private List<Blog> blogs;
+	
 	public String getSecretKey() {
 		return secretKey;
 	}
@@ -59,14 +99,6 @@ public class User {
 		this.twoFactorAuthInitialised = twoFactorAuthInitialised;
 	}
 
-	private boolean isAuthenticated; 
-
-	@ManyToMany
-	@JoinTable
-	private List<Role> roles;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private List<Blog> blogs;
 
 	public boolean isAuthenticated() {
 		return isAuthenticated;

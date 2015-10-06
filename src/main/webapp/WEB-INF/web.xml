@@ -25,6 +25,9 @@
     <url-pattern>/LoginController</url-pattern>
     <url-pattern> /IndexController</url-pattern>
     <url-pattern> /ErrorController</url-pattern>
+    <url-pattern> /ResetController</url-pattern>
+<!--      <url-pattern>/</url-pattern> -->
+    
   </servlet-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

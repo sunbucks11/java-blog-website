@@ -15,15 +15,25 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.java.blog.entity.User;
+import com.java.blog.repository.UserRepository;
+import com.java.blog.service.UserService;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Component
 public class AdminFilter implements Filter {
 
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private UserRepository userRepository; 
+	
 	private static Logger log = LoggerFactory.getLogger(AdminFilter.class);
 	private boolean twoFactorAuthenticationEnabled = true; // XXX will this be
 															// configurable?
@@ -41,17 +51,42 @@ public class AdminFilter implements Filter {
 		String requestedUri = request.getRequestURL().toString();
 		
 		// allow all resources to get passed this filter
+		
+		System.out.println("REQUESTED URL: " + requestedUri);
+		
 	
 		log.info("requestedUri is:" + requestedUri);
 		if (requestedUri.matches(".*[css|jpg|png|gif|js]")
 				|| requestedUri.contains("admin/auth")
-				|| requestedUri.contains("/j_spring_security_logout")) {
+//				|| requestedUri.contains("/j_spring_security_logout")
+				) {
 			chain.doFilter(request, response);
 			return;
 		}
-
+		
 		HttpSession session = request.getSession(true);
 		
+		  if(requestedUri.contains("/ErrorController/Reset"))
+		  {
+			  request.getRequestDispatcher("/ResetController").forward(request,response);
+			  return; 
+		  }
+		  
+		  if(requestedUri.contains("/java-blog-website/index.html") || requestedUri.contains("/java-blog-website/index"))
+		  {
+			  request.getRequestDispatcher("/IndexController").forward(request,response);
+			  return; 
+		  }
+		  
+			if( requestedUri.contains("/j_spring_security_logout")){
+				TwoFactorAuthController.isVerificationRequired = true; 
+				request.getRequestDispatcher("/IndexController").forward(request,response);
+				 return; 
+			}
+		  
+		  
+		  
+		  
 		
 		SecurityContextImpl sci = ( SecurityContextImpl ) session.getAttribute( "SPRING_SECURITY_CONTEXT" );
 	    String username = null;
@@ -59,38 +94,46 @@ public class AdminFilter implements Filter {
 	    if ( sci != null ) {
 	      UserDetails cud = ( UserDetails ) sci.getAuthentication( ).getPrincipal( );
 	      username = cud.getUsername( );
-	   
-		
-
-		  if (username.equalsIgnoreCase("admin")  && twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session) && !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) 
-	   // if (someoneIsLoggedIn(session) && !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)) 
+ 
+		  if(request.getSession().getAttribute("isVerifiedError") != null && (boolean)request.getSession().getAttribute("isVerifiedError") == true)
 		  {
-			// response.sendRedirect("/java-blog-website/TwoFactorAuthController");
+			  				
+			  
+			  if(TwoFactorAuthController.isResetTwoFactorAuth && TwoFactorAuthController.isVerificationRequired)
+			  {
+			    	twoFactorAuthenticationEnabled = true;
+			    	TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT = false; 
+			    	session.invalidate();
+				    chain.doFilter(request, response);
+				    return; 
+			  } 
+		  }
+
+
+		  if (username.equalsIgnoreCase("admin")  && 
+				  twoFactorAuthenticationEnabled  && 
+				  someoneIsLoggedIn(session)	  && 
+				  !isUserAlreadyAuthenticatedWithTwoFactorAuth(session) && 
+				  !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) 
+		  {
 			request.getRequestDispatcher("/TwoFactorAuthController").forward(request,response);
 			return;
 		 }
 		
-
-		  if(request.getSession().getAttribute("isVerified") != null){
-			  boolean isVerified = (boolean) request.getSession().getAttribute("isVerified");
-			  System.out.println("IS VERIFIED: " +  request.getSession().getAttribute("isVerified"));
-		  }
 		  
-		  if(request.getSession().getAttribute("isVerified") != null && (boolean)request.getSession().getAttribute("isVerified") == false){
-			request.getRequestDispatcher("/LoginController").forward(request,response);
-			return; 
-		  }
-
+		  System.out.println("isVerificationRequired: " + request.getSession().getAttribute("isVerificationRequired"));
 
 		 //if(username.equalsIgnoreCase("admin") && TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && request.getSession().getAttribute("isVerified") == null) 
 		 if(username.equalsIgnoreCase("admin") && 
 			TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && 
-			request.getSession().getAttribute("isVerified") == null 
-			/* && (boolean)request.getSession().getAttribute("isVerified") == true */
-//			&& (boolean)request.getSession().getAttribute("isError") == false
+			TwoFactorAuthController.isVerificationRequired
+			//request.getSession().getAttribute("isVerificationRequired") == null ||
+			//(boolean)request.getSession().getAttribute("isVerificationRequired")  
+
 			)
 		 {
 			 request.getRequestDispatcher("/VerificationController").forward(request,response);
+			 request.getSession().setAttribute("isVerificationRequired", false);
 			 return; 
 		 }
 	    }

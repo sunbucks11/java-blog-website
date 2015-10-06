@@ -16,8 +16,8 @@
 		<intercept-url pattern="/index*" access="hasRole('ROLE_ADMIN')" />
 		
 		<form-login login-page="/login.html" />
-		<!-- <logout logout-url="/logout" /> -->
-		<logout logout-success-url="/index" />
+ 	   <!--  <logout logout-url="/logout" /> -->
+		<logout logout-success-url="/index.hmtl" />
 	</http>
 
 	<authentication-manager>
