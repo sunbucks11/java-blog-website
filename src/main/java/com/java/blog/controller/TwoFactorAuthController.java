@@ -106,8 +106,8 @@ public class TwoFactorAuthController {
 	      }
 	      else
 	      {
-	    	  //String savedSecret = (String)request.getSession().getAttribute("secretKey");
-	    	  request.getRequestDispatcher("/VerificationController").forward(request,response);
+	    	  request.getRequestDispatcher("/verification.html").forward(request,response);
+	    	  
 	      }
 	      
 	      modelAndView.getModelMap( ).put( "formBean", twoFactorAuthForm );

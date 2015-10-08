@@ -16,6 +16,7 @@ import com.java.blog.service.UserService;
 
 @Controller
 @RequestMapping("/register")
+//@RequestMapping("/RegisterController")
 public class RegisterController {
 
 	@Autowired

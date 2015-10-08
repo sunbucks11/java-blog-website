@@ -23,23 +23,24 @@ import com.java.blog.service.UserService;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
-@RequestMapping("/VerificationController")
+//@RequestMapping("/VerificationController")
 public class VerificationController {
 
 	@Autowired
 	private UserService userService;
 	
-	// @RequestMapping("/verification")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping("/verification")
 	public String verification() {
 		return "verification";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void handleTwoFactorAuthInitialisation(HttpServletRequest request,
-			HttpServletResponse response,
-			@ModelAttribute("formBean") TwoFactorAuthForm twoFactorAuthForm,
-			BindingResult bindingResult) throws ServletException, IOException {
+	 
+	 
+//	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/verification", method = RequestMethod.POST)
+	public String handleVerification(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException 
+	{
 
 		HttpSession session = request.getSession(true);
 		SecurityContextImpl sci = (SecurityContextImpl) session
@@ -74,7 +75,8 @@ public class VerificationController {
 
 			boolean result = ga.check_code(savedSecret, code, t);
 
-			if (result && username != null) {
+			if (result && username != null) 
+			{
 				// pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");
 				
 				request.getSession().setAttribute("isVerified", true);
@@ -84,21 +86,102 @@ public class VerificationController {
 				userService.findOne(username).setVerified(true);
 				userService.findOne(username).setVerifiedError(false);
 				TwoFactorAuthController.isVerificationRequired = false; 
-				request.getRequestDispatcher("/IndexController").forward(request, response);
+				//request.getRequestDispatcher("/IndexController").forward(request, response);
 				// return "index";
+				return "redirect:/index.html";
 			} else {
-				// pw.write("<html><body><h1>Code Verification Unsuccessful please contact the Administrator</h1></body></html>");
-				//request.getSession().setAttribute("isError", true);
-					//request.getSession().setAttribute("isVerified", false);
 				
 				request.getSession().setAttribute("isVerifiedError", false);
-				
-				//TwoFactorAuthController.isVerificationRequired = true; 
-				
 				userService.findOne(username).setVerified(false);
 				userService.findOne(username).setVerifiedError(true);
-				request.getRequestDispatcher("/ErrorController").forward(request, response);
+				//return "redirect:/error.html";
 			}
 		}
+		
+		return "redirect:/error.html";
 	}
 }
+
+
+
+
+//@Controller
+//@RequestMapping("/VerificationController")
+//public class VerificationController {
+//
+//	@Autowired
+//	private UserService userService;
+//	
+//	// @RequestMapping("/verification")
+//	@RequestMapping(method = RequestMethod.GET)
+//	public String verification() {
+//		return "verification";
+//	}
+//
+//	@RequestMapping(method = RequestMethod.POST)
+//	public void handleTwoFactorAuthInitialisation(HttpServletRequest request,
+//			HttpServletResponse response,
+//			@ModelAttribute("formBean") TwoFactorAuthForm twoFactorAuthForm,
+//			BindingResult bindingResult) throws ServletException, IOException {
+//
+//		HttpSession session = request.getSession(true);
+//		SecurityContextImpl sci = (SecurityContextImpl) session
+//				.getAttribute("SPRING_SECURITY_CONTEXT");
+//
+//		if (sci != null) {
+//
+//			String codestr = request.getParameter("code");
+//			long code = Long.parseLong(codestr);
+//			long t = System.currentTimeMillis();
+//
+//			GoogleAuthenticator ga = new GoogleAuthenticator();
+//			ga.setWindowSize(5); // should give 5 * 30 seconds of grace
+//
+//			// Get the secret key from the session , you will get it from the
+//			// db.
+//			String savedSecret = (String) request.getSession().getAttribute("secretKey");
+//			String username = null;
+//
+//			if (savedSecret == null) {
+//
+//				UserDetails cud = (UserDetails) sci.getAuthentication()
+//						.getPrincipal();
+//				username = cud.getUsername();
+//				userService.findOne(username).getSecretKey();
+//
+//				GoogleAuthenticatorKey key = TwoFactorAuthController.SecretKey;
+//
+//				System.out.println("key is: " + key.getKey());
+//				savedSecret = key.getKey();
+//			}
+//
+//			boolean result = ga.check_code(savedSecret, code, t);
+//
+//			if (result && username != null) {
+//				// pw.write("<html><body><h1>Code Verification Successful</h1></body></html>");
+//				
+//				request.getSession().setAttribute("isVerified", true);
+//				request.getSession().setAttribute("isAuthenticated", true);
+//				
+//				userService.findOne(username).setAuthenticated(true);
+//				userService.findOne(username).setVerified(true);
+//				userService.findOne(username).setVerifiedError(false);
+//				TwoFactorAuthController.isVerificationRequired = false; 
+//				request.getRequestDispatcher("/IndexController").forward(request, response);
+//				// return "index";
+//			} else {
+//				// pw.write("<html><body><h1>Code Verification Unsuccessful please contact the Administrator</h1></body></html>");
+//				//request.getSession().setAttribute("isError", true);
+//					//request.getSession().setAttribute("isVerified", false);
+//				
+//				request.getSession().setAttribute("isVerifiedError", false);
+//				
+//				//TwoFactorAuthController.isVerificationRequired = true; 
+//				
+//				userService.findOne(username).setVerified(false);
+//				userService.findOne(username).setVerifiedError(true);
+//				request.getRequestDispatcher("/ErrorController").forward(request, response);
+//			}
+//		}
+//	}
+//}
