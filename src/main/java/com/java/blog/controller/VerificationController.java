@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -41,10 +42,28 @@ public class VerificationController {
 	public String handleVerification(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException 
 	{
-
+		
+		String exitVerificationBtn = request.getParameter("exit-verification");
+		String saveVerificationBtn = request.getParameter("save-verification");
+		String verificationCodeTxtBox = request.getParameter("code");
+				
 		HttpSession session = request.getSession(true);
 		SecurityContextImpl sci = (SecurityContextImpl) session
 				.getAttribute("SPRING_SECURITY_CONTEXT");
+	
+		if(verificationCodeTxtBox == null || verificationCodeTxtBox.trim().length() == 0)
+		{
+			return "redirect:/logout";
+		}
+
+		
+		if (exitVerificationBtn != null)
+		{
+			return "redirect:/logout";
+		}
+		
+		
+		
 
 		if (sci != null) {
 
