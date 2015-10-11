@@ -23,7 +23,6 @@ public class BarcodeController {
          final String secret = key.getKey( ); 
          String username = "Semir";	
      	 String otpAuthURL =  "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth://totp/" +username+"?secret="+secret;
-        //String otpAuthURL = "https://chart.googleapis.com/chart?chs=200x200&chld=M%7C0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2Fjanet%3Ajanet%40teamnetsol.com%3Fsecret%3DGM5Z4FTOE5CDQ3F4%26issuer%3Djanet";
 
          modelAndView.getModelMap( ).put( "secretKey", secret );
          modelAndView.getModelMap( ).put( "barCodeUrl", otpAuthURL );

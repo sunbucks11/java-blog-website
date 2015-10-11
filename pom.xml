@@ -10,12 +10,15 @@
 	<build>
 		<plugins>
 			<!-- Jetty plugin with version number -->
-			<!-- <plugin> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId> 
-				<version>9.2.7.v20150116</version> </plugin> -->
-			<plugin>
+			 <plugin> 
+			 		<groupId>org.eclipse.jetty</groupId> 
+			 		<artifactId>jetty-maven-plugin</artifactId> 
+					<version>9.2.7.v20150116</version> 
+			</plugin>
+		<!-- 	<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-			</plugin>
+			</plugin> -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

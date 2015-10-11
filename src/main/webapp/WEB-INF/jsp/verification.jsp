@@ -126,7 +126,7 @@
 <!--   <label>Enter Your Key</label> <input type="text" name="code" class="form-control" placeholder="Verification Code" required><br /> --> 
    <label>Enter Your Key</label>
     <input type="text" name="code" class="form-control" placeholder="Verification Code"><br /> 
-    <input class="btn btn-lg btn-primary btn-block" type="submit" name="button" value="submit">
+    <input class="btn btn-lg btn-primary btn-block" type="submit" name="button" value="Verify">
     
     
 
