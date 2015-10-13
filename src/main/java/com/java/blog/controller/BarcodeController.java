@@ -1,7 +1,5 @@
 package com.java.blog.controller;
 
-//import home.test.googauth.GoogleAuthenticator;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

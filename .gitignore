@@ -4,5 +4,5 @@
 .gitignore
 .project
 .DS_Store
-<<<<<<< HEAD
 /bin/
+/target/

@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.java.blog.model.TwoFactorAuthForm;
 import com.java.blog.service.UserService;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
+//import com.warrenstrange.googleauth.GoogleAuthenticator;
+//import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
@@ -54,7 +55,7 @@ public class TwoFactorAuthController {
 			UserDetails cud = (UserDetails) sci.getAuthentication().getPrincipal();
 			username = cud.getUsername();
 			userService.findOne(username);
-			TwoFactorAuthForm twoFactorAuthForm = new TwoFactorAuthForm(userService.findOne(username));
+			//TwoFactorAuthForm twoFactorAuthForm = new TwoFactorAuthForm(userService.findOne(username));
 
 			System.out.println("Current User: " + userService.findOne(username).getName());
 
@@ -86,7 +87,7 @@ public class TwoFactorAuthController {
 
 				}
 
-				modelAndView.getModelMap().put("formBean", twoFactorAuthForm);
+				//modelAndView.getModelMap().put("formBean", twoFactorAuthForm);
 			} catch (Exception e) {
 				e.printStackTrace();
 				modelAndView = redirectWithMessage("/", "Something went wrong while authenticating user");
