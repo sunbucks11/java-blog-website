@@ -40,10 +40,10 @@ public class AdminFilter implements Filter {
 
 	}
 	
-	@Override
-	@Transactional(readOnly=true)
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
+	//@Override
+	//@Transactional(readOnly=true)
+	@Transactional
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)throws IOException, ServletException {
 		log.info("adminFilter.doFilter executed");
 
 		HttpServletRequest request = (HttpServletRequest) req;

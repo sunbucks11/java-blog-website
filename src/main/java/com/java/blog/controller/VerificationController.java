@@ -95,6 +95,7 @@ public class VerificationController {
 				return "redirect:/index.html";
 			} else {
 				
+				request.logout();
 				request.getSession().setAttribute("isVerifiedError", false);
 				userService.findOne(username).setVerified(false);
 				userService.findOne(username).setVerifiedError(true);
