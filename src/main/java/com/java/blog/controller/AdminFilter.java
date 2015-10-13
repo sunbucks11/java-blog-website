@@ -93,6 +93,11 @@ public class AdminFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		}
+		
+		if (requestedUri.contains("/reset.html")) {
+			chain.doFilter(request, response);
+			return;
+		}
 
 		SecurityContextImpl sci = (SecurityContextImpl) session
 				.getAttribute("SPRING_SECURITY_CONTEXT");

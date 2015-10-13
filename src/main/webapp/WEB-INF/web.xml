@@ -27,9 +27,8 @@
 		<url-pattern>*.xml</url-pattern>
 		
 		<url-pattern>/TwoFactorAuthController</url-pattern>
-	<!-- 	<url-pattern>/VerificationController</url-pattern> -->
-	<!-- 	<url-pattern>/ErrorController</url-pattern> -->
-         <url-pattern>/ResetController</url-pattern>
+		<url-pattern>/ErrorController</url-pattern>
+        <url-pattern>/ResetController</url-pattern>
 		
 	</servlet-mapping>
 

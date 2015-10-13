@@ -36,17 +36,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/user-register.jsp" />
 		<put-attribute name="current" value="register" />
 	</definition>
-		
-   <definition name="login" extends="common">
+
+	<definition name="login" extends="common">
 		<put-attribute name="title" value="Login" />
 		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
 		<put-attribute name="current" value="login" />
-	</definition>
-
-	<definition name="authenticator" extends="common">
-		<put-attribute name="title" value="Authentication" />
-		<put-attribute name="body" value="/WEB-INF/jsp/authenticator.jsp" />
-		<put-attribute name="current" value="authenticator" />
 	</definition>
 
 	<definition name="verification" extends="common">
@@ -61,19 +55,19 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/barcode.jsp" />
 		<put-attribute name="current" value="barcode" />
 	</definition>
-	
- <definition name="auth" extends="common">
- 	<put-attribute name="title" value="auth" />
-    <put-attribute name="body" value="/WEB-INF/jsp/auth.jsp"/>
-    <put-attribute name="current" value="auth" />
-  </definition>
+
+	<definition name="error" extends="common">
+		<put-attribute name="title" value="error" />
+		<put-attribute name="body" value="/WEB-INF/jsp/error.jsp" />
+		<put-attribute name="current" value="error" />
+	</definition>
 
 
- <definition name="error" extends="common">
- 	<put-attribute name="title" value="error" />
-    <put-attribute name="body" value="/WEB-INF/jsp/error.jsp"/>
-    <put-attribute name="current" value="error" />
-  </definition>
+	<definition name="reset" extends="common">
+		<put-attribute name="title" value="reset" />
+		<put-attribute name="body" value="/WEB-INF/jsp/reset.jsp" />
+		<put-attribute name="current" value="reset" />
+	</definition>
 
 
 </tiles-definitions>

@@ -57,8 +57,6 @@ h4{
 </style>
 
 
-
-
 <h1>Error: </h1>
 <h3>${error}</h3>
 
