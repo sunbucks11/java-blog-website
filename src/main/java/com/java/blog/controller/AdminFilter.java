@@ -27,7 +27,7 @@ import com.java.blog.service.UserService;
 
 @Component
 public class AdminFilter implements Filter {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -39,11 +39,11 @@ public class AdminFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 
 	}
-	
-	//@Override
-	//@Transactional(readOnly=true)
+
 	@Transactional
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)throws IOException, ServletException {
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse res,
+			FilterChain chain) throws IOException, ServletException {
 		log.info("adminFilter.doFilter executed");
 
 		HttpServletRequest request = (HttpServletRequest) req;
@@ -54,7 +54,8 @@ public class AdminFilter implements Filter {
 
 		// allow all resources to tget passed this filter
 		log.info("requestedUri is:" + requestedUri);
-		if (requestedUri.matches(".*[css|jpg|png|gif|js]") || requestedUri.contains("admin/auth")) {
+		if (requestedUri.matches(".*[css|jpg|png|gif|js]")
+				|| requestedUri.contains("admin/auth")) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -62,7 +63,8 @@ public class AdminFilter implements Filter {
 		HttpSession session = request.getSession(true);
 
 		if (requestedUri.contains("/ErrorController/Reset")) {
-			request.getRequestDispatcher("/ResetController").forward(request, response);
+			request.getRequestDispatcher("/ResetController").forward(request,
+					response);
 			return;
 		}
 
@@ -92,15 +94,18 @@ public class AdminFilter implements Filter {
 			return;
 		}
 
-		SecurityContextImpl sci = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl sci = (SecurityContextImpl) session
+				.getAttribute("SPRING_SECURITY_CONTEXT");
 		String username = null;
 
 		if (sci != null) {
-			UserDetails cud = (UserDetails) sci.getAuthentication().getPrincipal();
+			UserDetails cud = (UserDetails) sci.getAuthentication()
+					.getPrincipal();
 			username = cud.getUsername();
 
 			if (request.getSession().getAttribute("isVerifiedError") != null
-					&& (boolean) request.getSession().getAttribute("isVerifiedError") == true) {
+					&& (boolean) request.getSession().getAttribute(
+							"isVerifiedError") == true) {
 
 				if (TwoFactorAuthController.isResetTwoFactorAuth) {
 					twoFactorAuthenticationEnabled = true;
@@ -110,22 +115,29 @@ public class AdminFilter implements Filter {
 					return;
 				}
 			}
-			
-			
+
 			boolean loggedinUserHasAdminRole = isLoggedinUserHasAdminRole(username);
 
-			if (loggedinUserHasAdminRole && twoFactorAuthenticationEnabled && someoneIsLoggedIn(session)		
-				&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)
+			if (loggedinUserHasAdminRole && twoFactorAuthenticationEnabled
+					&& someoneIsLoggedIn(session)
+					&& !isUserAlreadyAuthenticatedWithTwoFactorAuth(session)
 					&& !TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT) {
-				request.getRequestDispatcher("/TwoFactorAuthController").forward(request, response);
+				request.getRequestDispatcher("/TwoFactorAuthController")
+						.forward(request, response);
 				return;
 			}
 
-			System.out.println("isVerificationRequired: " + request.getSession().getAttribute("isVerificationRequired"));
-	
-			if (loggedinUserHasAdminRole && TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT && TwoFactorAuthController.isVerificationRequired) {	
-				request.getRequestDispatcher("/verification.html").forward(request, response);
-				request.getSession().setAttribute("isVerificationRequired", false);
+			System.out.println("isVerificationRequired: "
+					+ request.getSession().getAttribute(
+							"isVerificationRequired"));
+
+			if (loggedinUserHasAdminRole
+					&& TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_INT
+					&& TwoFactorAuthController.isVerificationRequired) {
+				request.getRequestDispatcher("/verification.html").forward(
+						request, response);
+				request.getSession().setAttribute("isVerificationRequired",
+						false);
 				return;
 			}
 		}
@@ -136,10 +148,12 @@ public class AdminFilter implements Filter {
 
 	private boolean someoneIsLoggedIn(HttpSession session) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+			SecurityContextImpl sci = (SecurityContextImpl) session
+					.getAttribute("SPRING_SECURITY_CONTEXT");
 			String username = null;
 			if (sci != null) {
-				UserDetails cud = (UserDetails) sci.getAuthentication().getPrincipal();
+				UserDetails cud = (UserDetails) sci.getAuthentication()
+						.getPrincipal();
 				username = cud.getUsername();
 			}
 			log.info("LoggedInUser is " + username);
@@ -157,28 +171,27 @@ public class AdminFilter implements Filter {
 
 	}
 
-	
 	// Helper Methods
-	private boolean isUserAlreadyAuthenticatedWithTwoFactorAuth(HttpSession session)
-			throws IOException, ServletException {
-		Object twoFactorSuccess = session.getAttribute(TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_SUCCESS);
+	private boolean isUserAlreadyAuthenticatedWithTwoFactorAuth(
+			HttpSession session) throws IOException, ServletException {
+		Object twoFactorSuccess = session
+				.getAttribute(TwoFactorAuthController.TWO_FACTOR_AUTHENTICATION_SUCCESS);
 
-		if (twoFactorSuccess != null && twoFactorSuccess instanceof Boolean && (Boolean) twoFactorSuccess) {
+		if (twoFactorSuccess != null && twoFactorSuccess instanceof Boolean
+				&& (Boolean) twoFactorSuccess) {
 			return true;
 		}
 		return false;
 	}
-	
-	
-	private boolean isLoggedinUserHasAdminRole(String username)
-	{
+
+	private boolean isLoggedinUserHasAdminRole(String username) {
 		List<Role> roles = new ArrayList<Role>();
-		roles = userService.findOneWithBlogs(username).getRoles();		
-		for (Role role : roles) {		
-			if(role.getName().contains("ROLE_ADMIN")){			
-				return true; 
-			}			
-		}		
+		roles = userService.findOneWithBlogs(username).getRoles();
+		for (Role role : roles) {
+			if (role.getName().contains("ROLE_ADMIN")) {
+				return true;
+			}
+		}
 		return false;
 	}
 

@@ -53,8 +53,5 @@ h1{
 
 </style>
 
-
-
-
 <!-- <h1>Error: </h1> -->
-<h3>Successfully Resert</h3>
+<h3>Successfully Reset</h3>

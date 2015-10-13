@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
 	<%@include file="../layout/taglib.jsp"%>
@@ -60,12 +60,12 @@ $(document).ready(function(){
 
 
 
-<%-- <form class="form-signin" role="form" action="<spring:url value="AuthController" />" method="POST">
+<form class="form-signin" role="form" action="<spring:url value="AuthController" />" method="POST">
 	<input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
 	<input type="password" name="j_password" class="form-control" placeholder="Password" required>
  	<input type="checkbox" name="setup" value="true" checked="checked">
  	<input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">
-</form> --%>
+</form>
 
 
 				<p>
@@ -101,3 +101,4 @@ $(document).ready(function(){
   </div>
 </div> <!-- /Modal -->
 
+ --%>

@@ -55,12 +55,9 @@ public class VerificationController {
 		if (sci != null) {
 
 			String codestr = request.getParameter("code");
-			//long code = Long.parseLong(codestr);
 			Integer code = Integer.parseInt(codestr);
-			long t = System.currentTimeMillis();
 
 			GoogleAuthenticator ga = new GoogleAuthenticator();
-			//ga.setWindowSize(5); // should give 5 * 30 seconds of grace
 
 			// Get the secret key from the session , you will get it from the db.
 			String savedSecret = (String) request.getSession().getAttribute("secretKey");
@@ -79,10 +76,8 @@ public class VerificationController {
 				savedSecret = key.getKey();
 			}
 
-			//boolean result = ga.check_code(savedSecret, code, t);
 			boolean result = ga.authorize(savedSecret, code);
 			
-
 			if (result && username != null) 
 			{			
 				request.getSession().setAttribute("isVerified", true);

@@ -60,7 +60,6 @@ $(document).ready(function(){
 </div>
 
 
-
 <!-- Modal -->
 <div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -79,22 +78,3 @@ $(document).ready(function(){
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

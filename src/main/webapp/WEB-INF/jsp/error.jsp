@@ -62,15 +62,6 @@ h4{
 <h1>Error: </h1>
 <h3>${error}</h3>
 
-<!-- <form class="form-signin" action="VerifyController" method="post">
-<form class="form-signin" method="post">
-  <h1>Verification Code</h1> <br />
-  <label>Enter Your Key</label> <input type="text" name="code"
-    class="form-control" placeholder="Name" required><br /> 
-    <input class="btn btn-lg btn-primary btn-block" type="submit" value="submit">
-</form>   -->
-
-
 <br /><br />
 
 <form method="post" action="/java-blog-website/ErrorController/Reset">

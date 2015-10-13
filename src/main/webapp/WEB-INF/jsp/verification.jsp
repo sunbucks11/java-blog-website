@@ -48,21 +48,8 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* .button-link {
     padding: 10px 15px;
-    /* background: #4479BA; */
     background: #D61111;
     color: #FFF;
 }
@@ -102,21 +89,6 @@
     background: #2E5481;
     border: solid 1px #D61111;
 } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </style>
 
