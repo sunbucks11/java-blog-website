@@ -55,3 +55,10 @@ h1{
 
 <!-- <h1>Error: </h1> -->
 <h3>Successfully Reset</h3>
+
+
+
+<form  action="ResetController" method="post">
+   <br />
+    <input class="btn btn-lg btn-primary" type="submit" name="back-login" value="Back Login"> 
+</form> 

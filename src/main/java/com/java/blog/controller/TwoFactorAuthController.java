@@ -16,8 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.blog.service.UserService;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
-//import com.warrenstrange.googleauth.GoogleAuthenticator;
-//import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 @Controller
@@ -86,8 +84,6 @@ public class TwoFactorAuthController {
 					request.getRequestDispatcher("/verification.html").forward(request, response);
 
 				}
-
-				//modelAndView.getModelMap().put("formBean", twoFactorAuthForm);
 			} catch (Exception e) {
 				e.printStackTrace();
 				modelAndView = redirectWithMessage("/", "Something went wrong while authenticating user");

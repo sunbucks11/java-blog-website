@@ -68,6 +68,15 @@ public class AdminFilter implements Filter {
 			return;
 		}
 
+		/*
+		if (requestedUri.contains("/ResetController/backToLogin")) {
+			request.getRequestDispatcher("/LoginController").forward(request,
+					response);
+			return;
+		}
+		*/
+		
+		
 		if (requestedUri.contains("/logout")) {
 			TwoFactorAuthController.isVerificationRequired = true;
 			chain.doFilter(request, response);
