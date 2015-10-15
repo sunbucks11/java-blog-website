@@ -27,14 +27,14 @@ public class TwoFactorAuthController {
 
 	public static final String TWO_FACTOR_AUTHENTICATION_SUCCESS = "TWO_FACTOR_AUTHENTICATION";
 
-	public static boolean isResetTwoFactorAuth = false;
-	public static boolean isVerificationRequired = true;
-
 	public static boolean TWO_FACTOR_AUTHENTICATION_INT = false;
 
-	public static GoogleAuthenticatorKey SecretKey;
-
 	public static boolean TWO_FACTOR_VERIFIED = false;
+	
+	public static boolean isResetTwoFactorAuth = false;
+	public static boolean isVerificationRequired = true;
+	
+	public static GoogleAuthenticatorKey SecretKey;
 
 	@Autowired
 	private UserService userService;
@@ -53,7 +53,6 @@ public class TwoFactorAuthController {
 			UserDetails cud = (UserDetails) sci.getAuthentication().getPrincipal();
 			username = cud.getUsername();
 			userService.findOne(username);
-			//TwoFactorAuthForm twoFactorAuthForm = new TwoFactorAuthForm(userService.findOne(username));
 
 			System.out.println("Current User: " + userService.findOne(username).getName());
 

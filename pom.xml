@@ -48,20 +48,76 @@
 		<org.springframework.version>4.0.2.RELEASE</org.springframework.version>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 		<apache.tiles>3.0.3</apache.tiles>
+		<logback.version>1.0.13</logback.version>
+		<aspectj.version>1.7.2</aspectj.version>
+		<mysql.version>5.1.26</mysql.version>
+		<jackson-json.version>2.3.1</jackson-json.version>
+		<commons-dbcp.version>1.2.2</commons-dbcp.version>
 	</properties>
 
 	<dependencies>
+	
+	
+	 <!-- DB dependencies -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-json.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>${commons-dbcp.version}</version>
+		</dependency>
+	
+		<!-- MAIL dependencies -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+	
+	
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		
+	  <dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
+		</dependency> -->
+
+
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>junit</groupId>

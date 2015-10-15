@@ -2,6 +2,7 @@ package com.java.blog.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -38,11 +39,13 @@ public class InitDbService {
 		
 		if (roleRepository.findByName("ROLE_ADMIN") == null) {
 			Role roleUser = new Role();
-			roleUser.setName("ROLE_USER");
+			//roleUser.setName("ROLE_USER");
+			roleUser.setRoleName("ROLE_USER");
 			roleRepository.save(roleUser);
 
 			Role roleAdmin = new Role();
-			roleAdmin.setName("ROLE_ADMIN");
+			//roleAdmin.setName("ROLE_ADMIN");
+			roleAdmin.setRoleName("ROLE_ADMIN");
 			roleRepository.save(roleAdmin);
 
 			User userAdmin = new User();
@@ -57,7 +60,8 @@ public class InitDbService {
 			List<Role> roles = new ArrayList<Role>();
 			roles.add(roleAdmin);
 			roles.add(roleUser);
-			userAdmin.setRoles(roles);
+			//userAdmin.setRoles(roles);
+			userAdmin.setRoles((Set<Role>) roles);
 			userRepository.save(userAdmin);
 
 			Blog blogJavavids = new Blog();

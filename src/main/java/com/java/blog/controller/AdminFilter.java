@@ -33,13 +33,13 @@ public class AdminFilter implements Filter {
 
 	private static Logger log = LoggerFactory.getLogger(AdminFilter.class);
 
-	private boolean twoFactorAuthenticationEnabled = true; // XXX will this be
-															// configurable?
+	private boolean twoFactorAuthenticationEnabled = true; // XXX will this be configurable?
 
 	public void init(FilterConfig filterConfig) throws ServletException {
 
 	}
 
+	
 	@Transactional
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
@@ -67,15 +67,6 @@ public class AdminFilter implements Filter {
 					response);
 			return;
 		}
-
-		/*
-		if (requestedUri.contains("/ResetController/backToLogin")) {
-			request.getRequestDispatcher("/LoginController").forward(request,
-					response);
-			return;
-		}
-		*/
-		
 		
 		if (requestedUri.contains("/logout")) {
 			TwoFactorAuthController.isVerificationRequired = true;
@@ -198,6 +189,7 @@ public class AdminFilter implements Filter {
 		return false;
 	}
 
+/*	
 	private boolean isLoggedinUserHasAdminRole(String username) {
 		List<Role> roles = new ArrayList<Role>();
 		roles = userService.findOneWithBlogs(username).getRoles();
@@ -208,5 +200,20 @@ public class AdminFilter implements Filter {
 		}
 		return false;
 	}
-
+ */
+	
+	/******** FOR TEST PURPOSE ******/
+	private boolean isLoggedinUserHasAdminRole(String username) {
+		  List<Role> roles = new ArrayList<Role>();
+		//List<Role> roles = new ArrayList<Role>();
+		//roles = userService.findOneWithBlogs(username).getRoles();
+		roles = (List<Role>) userService.findOneWithBlogs(username).getRoles();
+		
+		for (Role role : roles) {
+			if (role.getRoleName().contains("ROLE_ADMIN")) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
