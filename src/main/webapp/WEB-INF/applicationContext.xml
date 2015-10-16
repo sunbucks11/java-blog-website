@@ -49,8 +49,8 @@
 	
 	<jpa:repositories base-package="com.java.blog.repository" />
 
-	<import resource="security.xml" />
-	<task:annotation-driven />
+<!-- 	<import resource="security.xml" />
+	<task:annotation-driven /> -->
 
 	<beans profile="dev">
 		<import resource="database-dev.xml" />
