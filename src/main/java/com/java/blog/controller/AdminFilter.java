@@ -210,7 +210,7 @@ public class AdminFilter implements Filter {
 		roles = (List<Role>) userService.findOneWithBlogs(username).getRoles();
 		
 		for (Role role : roles) {
-			if (role.getRoleName().contains("ROLE_ADMIN")) {
+			if (role.getName().contains("ROLE_ADMIN")) {
 				return true;
 			}
 		}

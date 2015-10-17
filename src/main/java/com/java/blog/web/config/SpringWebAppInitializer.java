@@ -11,10 +11,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.java.blog.config.JavaBlogWebApplicationConfig;
 
-/**
- * @author Semir
- *
- */
 public class SpringWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
 

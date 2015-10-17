@@ -17,6 +17,7 @@ import com.java.blog.web.config.SecurityUser;
  * @author Semir
  *
  */
+
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -24,8 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UserService userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName)
-			throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		User user = userService.findUserByEmail(userName);
 		if (user == null) {
 			throw new UsernameNotFoundException("UserName " + userName

@@ -23,18 +23,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.java.blog.controller.AdminFilter;
 
 @Configuration
-@EnableWebMvc
-@ComponentScan(basePackages = { "com.java.blog" }, excludeFilters = { @Filter(Configuration.class) })
-//@ComponentScan(basePackages = { "com.java.blog" }, excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = { "com.java.blog.web.*" }))
+//@ComponentScan(basePackages = { "com.java.blog" }, excludeFilters = { @Filter(Configuration.class) })
+@ComponentScan(basePackages = { "com.java.blog" }, excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = { "com.java.blog.web.*" }))
 @PropertySource(value = { "classpath:application.properties" })
+//@Import({ PersistenceConfig.class })
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableCaching
-@Import({ PersistenceConfig.class })
 public class JavaBlogWebApplicationConfig {
-	
+
 	@Autowired
 	private Environment env;
+	
 	
 	@Bean
 	public AdminFilter adminFilter() {
@@ -50,8 +50,7 @@ public class JavaBlogWebApplicationConfig {
 	public CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager();
 	}
-	
-	
+
 	@Bean
 	public JavaMailSenderImpl javaMailSenderImpl() {
 		JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();

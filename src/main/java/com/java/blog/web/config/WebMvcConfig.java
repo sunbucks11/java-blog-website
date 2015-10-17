@@ -19,12 +19,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-/**
- * @author Semir
- * 
- */
+
 @Configuration
-@ComponentScan(basePackages = { "com.sivalabs.springapp.web"}) 
+@ComponentScan(basePackages = { "com.java.blog.web"}) 
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter
 {
@@ -33,11 +30,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
 		super.addViewControllers(registry);
-		/*
-		registry.addViewController("login/form").setViewName("login");		
-		registry.addViewController("welcome").setViewName("welcome");
-		registry.addViewController("admin").setViewName("admin");
-		*/
 		registry.addViewController("login/form").setViewName("login");		
 		registry.addViewController("welcome").setViewName("welcome");
 		registry.addViewController("admin").setViewName("admin");
